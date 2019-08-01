@@ -34,7 +34,7 @@ db.once('open', () => {console.log("connected to mongo")});
 // STATIC
 app.use(express.static('public'));
 
-// POPULATE REQ.BODY WITH FORM INFO
+// BODYPARSER: POPULATE REQ.BODY WITH FORM INFO
 app.use(express.urlencoded({extended: false}));
 
 // RETURNS MIDDLEWARE THAT ONLY PARSES JSON
@@ -55,3 +55,8 @@ app.get('/', (req, res) => {
 //  LISTENER
 // ===========
 app.listen(PORT, () => console.log('Listening on port: ', PORT));
+
+// ======================
+// CONSOLE.LOG GRAVEYARD
+// ======================
+// console.log(process.env.MONGODB_URI);
