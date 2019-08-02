@@ -1,10 +1,18 @@
 // =============
 // DEPENDENCIES
 // =============
+// EXPRESS
 const express = require('express');
-const methodOverride = require('method-override');
-const mongoose = require('mongoose');
 const app = express();
+
+// EXPRESS-SESSION
+const session = require('express-session');
+
+// METHOD-OVERRIDE
+const methodOverride = require('method-override');
+
+// MONGOOSE
+const mongoose = require('mongoose');
 const db = mongoose.connection;
 
 // =======
@@ -43,6 +51,13 @@ app.use(express.json());
 // METHOD OVERRIDE
 app.use(methodOverride('_method'));
 
+// EXPRESS SESSION
+app.use(session({
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: false
+}));
+
 // ===========
 //   ROUTES
 // ===========
@@ -50,6 +65,10 @@ app.use(methodOverride('_method'));
 app.get('/', (req, res) => {
   res.render('index.ejs', {tabTitle: "Home"})
 });
+
+// SIGNUP CONTROLLER
+const signupController = require('./controllers/signup.js');
+app.use('/signup', signupController);
 
 // ===========
 //  LISTENER
