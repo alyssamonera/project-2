@@ -24,6 +24,16 @@ main{
   box-sizing: border-box;
 }
 
+/* HOME PAGE */
+
+.home-page{
+  margin: 10em 0;
+}
+
+.home-page h2{
+  text-align: center;
+}
+
 /* SIGNUP PAGE */
 
 .signup-page{
@@ -53,15 +63,22 @@ input{
 
 /* FOOTER */
 footer{
+  margin: 0 auto;
   display: flex;
+  justify-content: center;
 }
 
 .footer-about, .footer-links, .footer-connect{
   width: 30%;
 }
 
+.footer-links, .footer-connect{
+  text-align: center;
+}
+
 .footer-links ul, .footer-connect ul{
   list-style-type: none;
   display: block;
   margin: 0 auto;
+  margin-left: -2em;
 }
