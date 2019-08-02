@@ -17,3 +17,51 @@ header ul{
 header li{
   margin: 1em;
 }
+
+/* MAIN */
+
+main{
+  box-sizing: border-box;
+}
+
+/* SIGNUP PAGE */
+
+.signup-page{
+  margin: 10em 0;
+}
+
+.signup-page h2{
+  text-align: center;
+}
+
+/* FORM */
+
+form{
+  display: block;
+  margin: 0 auto;
+}
+
+label, input{
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+input{
+  margin-bottom: 1em;
+}
+
+/* FOOTER */
+footer{
+  display: flex;
+}
+
+.footer-about, .footer-links, .footer-connect{
+  width: 30%;
+}
+
+.footer-links ul, .footer-connect ul{
+  list-style-type: none;
+  display: block;
+  margin: 0 auto;
+}
