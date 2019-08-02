@@ -11,7 +11,7 @@ const bcrypt = require('bcrypt');
 // ========
 // NEW
 signup.get('/', (req, res) => {
-  res.render('signup/new.ejs', {tabTitle: "Sign Up"})
+  res.render('signup/new.ejs', {tabTitle: "Sign Up", currentUser: req.session.currentUser})
 });
 
 // POST

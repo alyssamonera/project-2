@@ -28,7 +28,7 @@ login.post('/', (req, res) => {
 //  READ
 // ========
 login.get('/', (req, res) => {
-  res.render('login/new.ejs', {tabTitle: "Log In"})
+  res.render('login/new.ejs', {tabTitle: "Log In", currentUser: req.session.currentUser})
 });
 
 // ========
