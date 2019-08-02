@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <% include ../partials/head.ejs %>
+  </head>
+  <body>
+
+    <header>
+      <% include ../partials/header.ejs %>
+    </header>
+
+    <main class="login-page">
+      <h2>Sign Up</h2>
+      <form action="/login" method="POST">
+        <label for="username">Username</label>
+        <input type="text" name="username" placeholder="Username">
+
+        <label for="password">Password</label>
+        <input type="password" name="password" placeholder="Password">
+
+        <input type="submit" value="Log In">
+      </form>
+    </main>
+
+    <footer>
+      <% include ../partials/footer.ejs%>
+    </footer>
+
+  </body>
+</html>

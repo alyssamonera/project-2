@@ -9,7 +9,9 @@
     </header>
 
     <main>
-      
+      <% if (currentUser) { %>
+        <h2>Welcome, <%= currentUser.username %>!</h2>
+      <% }%>
     </main>
 
     <footer>
