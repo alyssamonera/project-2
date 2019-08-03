@@ -9,6 +9,7 @@ const express = require('express');
 const prompt = express.Router();
 const Prompt = require('../models/prompts.js');
 const User = require('../models/users.js');
+const mongoose = require('mongoose');
 
 // ========
 // CREATE
@@ -26,10 +27,12 @@ prompt.post('/', (req, res) => {
   req.body.tags = tagArray;
 
   // Sets the author
-  req.body.author = req.session.currentUser.username;
+  req.body.author = {};
+  req.body.author.username = req.session.currentUser.username;
+  req.body.author.id = mongoose.Types.ObjectId(req.session.currentUser._id);
 
   // Adds the prompt to the author's prompts array
-  User.findOneAndUpdate({username: req.body.author}, {$push: {prompts: req.body}}, (err, user) => {
+  User.findOneAndUpdate({username: req.body.author.username}, {$push: {prompts: req.body}}, (err, user) => {
     // Database error
     if (err) {console.log(err)}
     // If user can't be found. Shouldn't happen at this stage, but just in case

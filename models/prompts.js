@@ -4,12 +4,16 @@
 
 // DEPENDENCIES
 const mongoose = require('mongoose');
+var ObjectId = mongoose.Schema.Types.ObjectId;
 
 // SCHEMA
 const promptSchema = mongoose.Schema({
   title: {type: String, required: true},
   body: String,
-  author: {type: String, required: true},
+  author: {
+    id: {type: ObjectId, required: true},
+    username: {type: String, required: true}
+  },
   tags: Array,
   responses: [{author: String, body: String, date: Date}],
   likes: {type: Number, default: 0, min: 0}

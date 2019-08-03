@@ -8,13 +8,14 @@
       <% include ../partials/header.ejs%>
     </header>
 
-    <main class="prompt-index">
-      <% for (let data of allPrompts) { %>
-        <div class="prompt-div">
-          <h3><a href="/prompts/<%=data.id%>"><%= data.title %></a></h3>
-          <h5>--<a href="#"><%= data.author.username %></a></h5>
-        </div>
+    <main class="user-show">
+
+      <% if (currentUser) { %>
+        <% if (user.username === currentUser.username) { %>
+
+        <% }%>
       <% }%>
+
     </main>
 
     <footer>
