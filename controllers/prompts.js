@@ -68,6 +68,14 @@ prompt.get('/:id/edit', (req, res) => {
 })
 
 // PUT
+prompt.put('/:id', (req, res) => {
+  Prompt.findByIdAndUpdate(req.params.id, req.body, (err, prompt) => {
+    if (err){console.log(err)}
+    else {
+      res.redirect(`/prompts/${req.params.id}`)
+    }
+  })
+});
 
 // ========
 // DESTROY
