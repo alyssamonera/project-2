@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <% include ../partials/head.ejs %>
+    <link rel="stylesheet" href="/css/credentials.css">
   </head>
   <body>
 
@@ -9,8 +10,14 @@
       <% include ../partials/header.ejs %>
     </header>
 
+    <% if (error) { %>
+      <div class="error-message">
+        <p>Incorrect username or password.</p>
+      </div>
+    <% }%>
+
     <main class="login-page">
-      <h2>Sign Up</h2>
+      <h2>Log In</h2>
       <form action="/login" method="POST">
         <label for="username">Username</label>
         <input type="text" name="username" placeholder="Username">

@@ -13,15 +13,17 @@ const User = require('../models/users.js');
 
 login.post('/', (req, res) => {
   User.findOne({username: req.body.username}, (err, user) => {
+    // Database error
     if (err){console.log(err)}
-    else if (!user){res.redirect('/signup')}
-    else{
-      if (bcrypt.compareSync(req.body.password, user.password)){
+
+    // Checks username and password
+    else if (!user || !bcrypt.compareSync(req.body.password, user.password)){
+      res.render('login/new.ejs', {tabTitle: "Log In", currentUser: req.session.currentUser, referer: req.headers.referer, error: true})
+
+    // All clear
+    } else {
         req.session.currentUser = user;
         res.redirect(req.body.referer)
-      } else {
-        res.send('<a href="/">wrong password</a>')
-      }
     }
   })
 });
@@ -30,7 +32,7 @@ login.post('/', (req, res) => {
 //  READ
 // ========
 login.get('/', (req, res) => {
-  res.render('login/new.ejs', {tabTitle: "Log In", currentUser: req.session.currentUser, referer: req.headers.referer})
+  res.render('login/new.ejs', {tabTitle: "Log In", currentUser: req.session.currentUser, referer: req.headers.referer, error: false})
 });
 
 // ========

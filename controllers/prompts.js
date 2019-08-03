@@ -37,8 +37,8 @@ prompt.post('/', (req, res) => {
       res.send("You have to be logged in to do that. <a href='/login'>Log in here.</a>")
     // If we're all good, send a confirmation log and add the prompt to the database
     } else {
-      console.log(`prompt successfully added to ${user}`);
       Prompt.create(req.body, (err, data) => {
+        console.log(`prompt successfully added to ${user.username}`);
         res.redirect('/prompts')
       })
     }
