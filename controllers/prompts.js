@@ -31,18 +31,15 @@ prompt.post('/', (req, res) => {
   req.body.author.id = req.session.currentUser._id;
 
   Prompt.create(req.body, (err, data) => {
-
     User.findByIdAndUpdate(
       req.body.author.id,
       {$push: {prompts: data}},
       {new: true},
       (err, user) => {
         if (err){console.log(err)}
-        else {
-          console.log("prompt successfully added to user");
-          res.redirect('/prompts');}
+        else {res.redirect('/prompts')}
       })
-  })
+    })
 });
 
 // ========
@@ -74,7 +71,7 @@ prompt.get('/:id/edit', (req, res) => {
   Prompt.findById(req.params.id, (err, prompt) => {
     if (!prompt){
       res.send("<p>Hmm! That prompt doesn't exist. <a href='/'>Return</a> </p>")
-    } else if (!req.session.currentUser || req.session.currentUser.username != prompt.author){
+    } else if (!req.session.currentUser || req.session.currentUser.username != prompt.author.username){
       res.send("<p>Hey! You don't have permission to edit this prompt. <a href='/login'>Log in</a> or <a href='/'>return to the homepage.</a> </p>")
     } else {
       res.render('prompts/edit.ejs', {tabTitle: "Edit prompt", currentUser: req.session.currentUser, prompt: prompt})
@@ -84,10 +81,23 @@ prompt.get('/:id/edit', (req, res) => {
 
 // PUT
 prompt.put('/:id', (req, res) => {
+  let tagArray = req.body.tags.split("#");
+  tagArray.shift();
+  req.body.tags = tagArray;
+
   Prompt.findByIdAndUpdate(req.params.id, req.body, (err, prompt) => {
     if (err){console.log(err)}
     else {
-      res.redirect(`/prompts/${req.params.id}`)
+      User.findById(prompt.author.id, (err, user) => {
+        let updatedPrompt = user.prompts.id(req.params.id);
+        let submittedChanges = req.body;
+        updatedPrompt.title = submittedChanges.title;
+        updatedPrompt.tags = submittedChanges.tags;
+        updatedPrompt.body = submittedChanges.body;
+        updatedPrompt._id = prompt._id;
+        console.log(user.prompts.id(req.params.id));
+        res.redirect(`/prompts/${req.params.id}`)
+      })
     }
   })
 });
@@ -95,14 +105,13 @@ prompt.put('/:id', (req, res) => {
 // ========
 // DESTROY
 // ========
-// Couldn't figure out how to $pull a prompt by id, so the imperfect solution here is to find and delete by title and body
 // DELETE
 prompt.delete('/:id', (req, res) => {
   Prompt.findByIdAndRemove(req.params.id, (err, prompt) => {
     let userId = prompt.author.id;
     User.findByIdAndUpdate(
       userId,
-      {$pull: {'prompts': {title: prompt.title, body: prompt.body}}},
+      {$pull: {'prompts': {_id: prompt._id}}},
       (err, user) => {
           res.redirect('/prompts');
     })
