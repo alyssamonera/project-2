@@ -27,7 +27,6 @@ user.get('/:id', (req, res) => {
     if (!user){
       res.send("<p>Hmm! That page doesn't exist. <a href='/'>Return to the homepage</a> </p>")
     } else {
-      console.log(user.prompts);
       res.render('users/show.ejs', {tabTitle: "Profile", currentUser: req.session.currentUser, user: user})
     }
   })

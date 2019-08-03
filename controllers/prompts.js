@@ -30,16 +30,14 @@ prompt.post('/', (req, res) => {
   req.body.author.username = req.session.currentUser.username;
   req.body.author.id = req.session.currentUser._id;
 
-  Prompt.create(req.body, (err, data) => {
-    User.findByIdAndUpdate(
-      req.body.author.id,
-      {$push: {prompts: data}},
-      {new: true},
-      (err, user) => {
-        if (err){console.log(err)}
-        else {res.redirect('/prompts')}
-      })
-    })
+  let prompt = new Prompt(req.body);
+
+  User.findById(req.body.author.id, (err, user) => {
+    user.prompts.push(prompt);
+    user.save();
+    prompt.save();
+    res.redirect('/prompts');
+  })
 });
 
 // ========
@@ -95,7 +93,7 @@ prompt.put('/:id', (req, res) => {
         updatedPrompt.tags = submittedChanges.tags;
         updatedPrompt.body = submittedChanges.body;
         updatedPrompt._id = prompt._id;
-        console.log(user.prompts.id(req.params.id));
+        user.save();
         res.redirect(`/prompts/${req.params.id}`)
       })
     }
@@ -109,11 +107,10 @@ prompt.put('/:id', (req, res) => {
 prompt.delete('/:id', (req, res) => {
   Prompt.findByIdAndRemove(req.params.id, (err, prompt) => {
     let userId = prompt.author.id;
-    User.findByIdAndUpdate(
-      userId,
-      {$pull: {'prompts': {_id: prompt._id}}},
-      (err, user) => {
-          res.redirect('/prompts');
+    User.findById(userId, (err, user) => {
+        user.prompts.id(prompt.id).remove();
+        user.save();
+        res.redirect('/prompts');
     })
   })
 });
