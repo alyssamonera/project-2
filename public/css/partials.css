@@ -1,0 +1,39 @@
+/* HEADER */
+.title-bar{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+header ul{
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  background-color:
+}
+
+header li{
+  margin: 1em;
+}
+
+/* FOOTER */
+footer{
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-about, .footer-links, .footer-connect{
+  width: 30%;
+}
+
+.footer-links, .footer-connect{
+  text-align: center;
+}
+
+.footer-links ul, .footer-connect ul{
+  list-style-type: none;
+  display: block;
+  margin: 0 auto;
+  margin-left: -2em;
+}
