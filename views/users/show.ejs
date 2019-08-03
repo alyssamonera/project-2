@@ -9,6 +9,13 @@
     </header>
 
     <main class="user-show">
+      <h2><%= user.username %></h2>
+
+      <ul>
+        <% for (let prompt of user.prompts) { %>
+          <li><a href="/prompts/<%= prompt._id %>"><%= prompt.title %></a></li>
+        <% }%>
+      </ul>
 
       <% if (currentUser) { %>
         <% if (user.username === currentUser.username) { %>

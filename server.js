@@ -82,6 +82,10 @@ app.use('/login', loginController);
 const promptController = require('./controllers/prompts.js');
 app.use('/prompts', promptController);
 
+// USER CONTROLLER
+const userController = require('./controllers/users.js');
+app.use('/users', userController);
+
 // ===========
 //  LISTENER
 // ===========

@@ -13,7 +13,7 @@
       <% if (prompt.body) { %>
         <p><%= prompt.body %></p>
       <% }%>
-      <h5>--<%= prompt.author.username %></h5>
+      <h5>--<a href="/users/<%= prompt.author.id %>"><%= prompt.author.username %></a></h5>
 
       <ul>
         <% for (let tag of prompt.tags) { %>

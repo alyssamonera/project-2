@@ -9,7 +9,6 @@ const express = require('express');
 const prompt = express.Router();
 const Prompt = require('../models/prompts.js');
 const User = require('../models/users.js');
-const mongoose = require('mongoose');
 
 // ========
 // CREATE
@@ -29,10 +28,11 @@ prompt.post('/', (req, res) => {
   // Sets the author
   req.body.author = {};
   req.body.author.username = req.session.currentUser.username;
-  req.body.author.id = mongoose.Types.ObjectId(req.session.currentUser._id);
+  req.body.author.id = req.session.currentUser._id;
 
   // Adds the prompt to the author's prompts array
   User.findOneAndUpdate({username: req.body.author.username}, {$push: {prompts: req.body}}, (err, user) => {
+
     // Database error
     if (err) {console.log(err)}
     // If user can't be found. Shouldn't happen at this stage, but just in case
@@ -100,11 +100,17 @@ prompt.put('/:id', (req, res) => {
 // ========
 // DELETE
 prompt.delete('/:id', (req, res) => {
-  Prompt.findByIdAndRemove(req.params.id, (err, prompt) => {
-    if (err){console.log(err)}
-    else{
-      res.redirect('/prompts')
-    }
+  Prompt.findById(req.params.id, (err, prompt) => {
+    let userId = prompt.author.id;
+    console.log(req.params.id);
+    User.findByIdAndUpdate(
+      userId,
+      {$pull: {'prompts': {title: prompt.title, body: prompt.body}}},
+      (err, user) => {
+        Prompt.findByIdAndRemove(req.params.id, (err, deletedPrompt) => {
+          res.redirect('/prompts');
+        })
+    })
   })
 });
 

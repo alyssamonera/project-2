@@ -6,7 +6,7 @@ const promptSchema = mongoose.Schema({
   title: {type: String, required: true},
   body: String,
   author: {
-    id: {type: ObjectId, required: true},
+    id: {type: String, required: true},
     username: {type: String, required: true}
   },
   tags: [String],
