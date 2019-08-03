@@ -11,23 +11,21 @@ const bcrypt = require('bcrypt');
 // ========
 // NEW
 signup.get('/', (req, res) => {
-  res.render('signup/new.ejs', {tabTitle: "Sign Up", currentUser: req.session.currentUser})
+  res.render('signup/new.ejs', {tabTitle: "Sign Up", currentUser: req.session.currentUser, error: false})
 });
 
 // POST
 signup.post('/', (req, res) => {
-  User.find({username: req.body.username}, (err, user) => {
-    if (user){
-      res.send("Sorry, that username is taken. <a href='/signup'>Try again</a>")
-    } else {
-      req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+    req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
 
-      User.create(req.body, (err, user) => {
-        if (err){console.log(err)}
-        else {console.log(user); res.redirect('/')}
-      })
-    }
-  })
+    User.create(req.body, (err, user) => {
+      if (err && err.code === 11000){
+        res.render('signup/new.ejs', {tabTitle: "Sign Up", currentUser: req.session.currentUser, error: true})
+      } else if (err && err.code != 11000){
+        res.send('Something went wrong on our end. Contact an administrator or <a href="/">return here.</a>')
+      } else {
+        res.redirect('/')}
+    })
 });
 
 module.exports = signup;

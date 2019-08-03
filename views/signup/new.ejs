@@ -2,12 +2,19 @@
 <html lang="en" dir="ltr">
   <head>
     <% include ../partials/head.ejs %>
+    <link rel="stylesheet" href="/css/signup.css">
   </head>
   <body>
 
     <header>
       <% include ../partials/header.ejs %>
     </header>
+
+    <% if (error){ %>
+      <div class="error-message">
+        <p>Sorry, that username is already taken.</p>
+      </div>
+    <% } %>
 
     <main class="signup-page">
       <h2>Sign Up</h2>

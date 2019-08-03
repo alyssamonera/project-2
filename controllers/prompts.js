@@ -8,6 +8,7 @@
 const express = require('express');
 const prompt = express.Router();
 const Prompt = require('../models/prompts.js');
+const User = require('../models/users.js');
 
 // ========
 // CREATE
@@ -19,15 +20,29 @@ prompt.get('/new', (req, res) => {
 
 // POST
 prompt.post('/', (req, res) => {
+  // Creates tag array
   let tagArray = req.body.tags.split("#");
   tagArray.shift();
   req.body.tags = tagArray;
 
+  // Sets the author
   req.body.author = req.session.currentUser.username;
 
-  Prompt.create(req.body, (err, data) => {
-    res.redirect('/prompts')
-  })
+  // Adds the prompt to the author's prompts array
+  User.findOneAndUpdate({username: req.body.author}, {$push: {prompts: req.body}}, (err, user) => {
+    // Database error
+    if (err) {console.log(err)}
+    // If user can't be found. Shouldn't happen at this stage, but just in case
+    else if (!user){
+      res.send("You have to be logged in to do that. <a href='/login'>Log in here.</a>")
+    // If we're all good, send a confirmation log and add the prompt to the database
+    } else {
+      console.log(`prompt successfully added to ${user}`);
+      Prompt.create(req.body, (err, data) => {
+        res.redirect('/prompts')
+      })
+    }
+  });
 });
 
 // ========
