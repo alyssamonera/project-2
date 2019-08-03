@@ -1,0 +1,49 @@
+/* MAIN */
+
+.new-prompt{
+  margin-left: 1em;
+}
+
+label{
+  text-align: left;
+}
+
+input[type=text]{
+  display: inline;
+  text-align: left;
+  font-size: 1.5em;
+}
+
+input[type=submit]{
+  margin: 0;
+  margin-bottom: 1em;
+}
+
+textarea{
+  display: block;
+  font-size: 2em;
+  height: 20vh;
+  width: 90%;
+  margin-bottom: 1em;
+}
+
+/* MODAL */
+
+.my-modal{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.my-modal-textbox{
+  background-color: var(--bright-blue);
+  color: white;
+  text-align: center;
+  padding: 1em;
+  margin: 15em auto;
+}
