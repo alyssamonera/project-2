@@ -16,11 +16,17 @@ signup.get('/', (req, res) => {
 
 // POST
 signup.post('/', (req, res) => {
-  req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+  User.find({username: req.body.username}, (err, user) => {
+    if (user){
+      res.send("Sorry, that username is taken. <a href='/signup'>Try again</a>")
+    } else {
+      req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
 
-  User.create(req.body, (err, user) => {
-    if (err){console.log(err)}
-    else {console.log(user); res.redirect('/')}
+      User.create(req.body, (err, user) => {
+        if (err){console.log(err)}
+        else {console.log(user); res.redirect('/')}
+      })
+    }
   })
 });
 

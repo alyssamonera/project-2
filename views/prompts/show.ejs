@@ -21,9 +21,12 @@
         <% }%>
       </ul>
 
-      <% if (prompt.author === currentUser.username) { %>
-        <a href="/prompts/<%= prompt.id %>/edit"><button>Edit</button></a>
+      <% if (currentUser) { %>
+        <% if (prompt.author === currentUser.username) { %>
+          <a href="/prompts/<%= prompt.id %>/edit"><button>Edit</button></a>
+        <% }%>
       <% }%>
+
     </main>
 
     <footer>
