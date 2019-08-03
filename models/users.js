@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // I tried just requiring prompts.js but Mongoose won't let me use a model as a Schema type so I had to paste it here again
 const promptSchema = mongoose.Schema({
-  title: {type: String, required: true, unique: true},
+  title: {type: String, required: true},
   body: String,
   author: {type: String, required: true},
   tags: [String],
@@ -11,8 +11,8 @@ const promptSchema = mongoose.Schema({
 });
 
 const userSchema = mongoose.Schema({
-  username: String,
-  password: String,
+  username: {type: String, required: true, unique: true},
+  password: {type: String, required: true},
   prompts: [promptSchema]
 });
 
