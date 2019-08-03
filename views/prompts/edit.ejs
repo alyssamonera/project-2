@@ -18,14 +18,10 @@
         <input type=text name="title" value="<%= prompt.title %>">
 
         <label for="body">Details</label>
-        <textarea name="body">
-          <% if (prompt.body){ %>
-            <%= prompt.body %>
-          <% }%>
-        </textarea>
+        <textarea name="body"><% if (prompt.body){ %><%= prompt.body %><% }%></textarea>
 
         <label for="tags">Tags (add #s)</label>
-        <input type="text" name="tags" value="<% for (let tag of prompt.tags) { %> #<%= tag %> <% }%>">
+        <input type="text" name="tags" value="<% for (let tag of prompt.tags) { %><%= tag %> <%}%>">
 
         <input type="submit" value="Submit">
 
