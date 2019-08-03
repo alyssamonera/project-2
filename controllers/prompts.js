@@ -81,5 +81,13 @@ prompt.put('/:id', (req, res) => {
 // DESTROY
 // ========
 // DELETE
+prompt.delete('/:id', (req, res) => {
+  Prompt.findByIdAndRemove(req.params.id, (err, prompt) => {
+    if (err){console.log(err)}
+    else{
+      res.redirect('/prompts')
+    }
+  })
+});
 
 module.exports = prompt;
