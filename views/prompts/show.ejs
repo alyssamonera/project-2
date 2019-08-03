@@ -20,6 +20,10 @@
           <li><%= tag %></li>
         <% }%>
       </ul>
+
+      <% if (prompt.author === currentUser.username) { %>
+        <a href="/prompts/<%= prompt.id %>/edit"><button>Edit</button></a>
+      <% }%>
     </main>
 
     <footer>
