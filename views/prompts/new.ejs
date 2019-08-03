@@ -14,8 +14,11 @@
       <h2>Add a new prompt</h2>
       <form action="/prompts" method="POST">
 
-        <label for="prompt">Prompt</label>
-        <textarea name="prompt" placeholder="What if...?"></textarea>
+        <label for="title">Prompt</label>
+        <input type=text name="title" placeholder="What if...?">
+
+        <label for="body">Details</label>
+        <textarea name="body" placeholder="Explain your prompt. (Optional)"></textarea>
 
         <label for="tags">Tags (add #s)</label>
         <input type="text" name="tags" placeholder="#original #horror #etc">
