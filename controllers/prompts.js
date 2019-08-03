@@ -30,22 +30,19 @@ prompt.post('/', (req, res) => {
   req.body.author.username = req.session.currentUser.username;
   req.body.author.id = req.session.currentUser._id;
 
-  // Adds the prompt to the author's prompts array
-  User.findOneAndUpdate({username: req.body.author.username}, {$push: {prompts: req.body}}, (err, user) => {
+  Prompt.create(req.body, (err, data) => {
 
-    // Database error
-    if (err) {console.log(err)}
-    // If user can't be found. Shouldn't happen at this stage, but just in case
-    else if (!user){
-      res.send("You have to be logged in to do that. <a href='/login'>Log in here.</a>")
-    // If we're all good, send a confirmation log and add the prompt to the database
-    } else {
-      Prompt.create(req.body, (err, data) => {
-        console.log(`prompt successfully added to ${user.username}`);
-        res.redirect('/prompts')
+    User.findByIdAndUpdate(
+      req.body.author.id,
+      {$push: {prompts: data}},
+      {new: true},
+      (err, user) => {
+        if (err){console.log(err)}
+        else {
+          console.log("prompt successfully added to user");
+          res.redirect('/prompts');}
       })
-    }
-  });
+  })
 });
 
 // ========
@@ -98,18 +95,16 @@ prompt.put('/:id', (req, res) => {
 // ========
 // DESTROY
 // ========
+// Couldn't figure out how to $pull a prompt by id, so the imperfect solution here is to find and delete by title and body
 // DELETE
 prompt.delete('/:id', (req, res) => {
-  Prompt.findById(req.params.id, (err, prompt) => {
+  Prompt.findByIdAndRemove(req.params.id, (err, prompt) => {
     let userId = prompt.author.id;
-    console.log(req.params.id);
     User.findByIdAndUpdate(
       userId,
       {$pull: {'prompts': {title: prompt.title, body: prompt.body}}},
       (err, user) => {
-        Prompt.findByIdAndRemove(req.params.id, (err, deletedPrompt) => {
           res.redirect('/prompts');
-        })
     })
   })
 });
