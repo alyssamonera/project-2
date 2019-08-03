@@ -7,7 +7,7 @@ const promptSchema = mongoose.Schema({
   body: String,
   author: {
     id: {type: String, required: true},
-    username: {type: String, required: true}
+    username: {type: String, required: true},
   },
   tags: [String],
   responses: [{author: String, body: String, date: Date}],
@@ -17,7 +17,8 @@ const promptSchema = mongoose.Schema({
 const userSchema = mongoose.Schema({
   username: {type: String, required: true, unique: true},
   password: {type: String, required: true},
-  prompts: [promptSchema]
+  prompts: [promptSchema],
+  avatar: String
 });
 
 const User = mongoose.model('User', userSchema);

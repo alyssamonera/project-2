@@ -12,7 +12,7 @@ const promptSchema = mongoose.Schema({
   body: String,
   author: {
     id: {type: ObjectId, required: true},
-    username: {type: String, required: true}
+    username: {type: String, required: true},
   },
   tags: Array,
   responses: [{author: String, body: String, date: Date}],
