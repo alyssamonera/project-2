@@ -25,6 +25,18 @@
       </form>
     </main>
 
+    <% if (!currentUser) { %>
+      <div class="my-modal">
+        <div class="my-modal-textbox">
+          <h3>Hold up!</h3>
+          <p>You need to log in to do that.</p>
+          <a href="/login"><button>Log In</button></a>
+          <a href="/signup"><button>Sign Up</button></a>
+        </div>
+      </div>
+    <% }%>
+
+
     <footer>
       <% include ../partials/footer.ejs%>
     </footer>

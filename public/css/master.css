@@ -1,5 +1,9 @@
 /* GLOBAL */
 
+:root{
+  --bright-blue: rgb(50,100,255);
+}
+
 /* HEADER */
 .title-bar{
   display: flex;
@@ -42,6 +46,27 @@ main{
 
 .signup-page h2{
   text-align: center;
+}
+
+/* MODAL */
+
+.my-modal{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.my-modal-textbox{
+  background-color: var(--bright-blue);
+  color: white;
+  text-align: center;
+  padding: 1em;
+  margin: 15em auto;
 }
 
 /* FORM */

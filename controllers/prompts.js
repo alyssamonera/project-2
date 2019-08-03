@@ -19,9 +19,12 @@ prompt.get('/new', (req, res) => {
 
 // POST
 prompt.post('/', (req, res) => {
-  let tagArray = req.body.tags.split("#");
+  let tagArray = req.body.tags.split("# ");
   tagArray.shift();
   req.body.tags = tagArray;
+
+  req.body.author = req.session.currentUser.username;
+
   Prompt.create(req.body, (err, data) => {
     res.redirect('/prompts')
   })
