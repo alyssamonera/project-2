@@ -66,6 +66,10 @@ app.get('/', (req, res) => {
   res.render('index.ejs', {tabTitle: "Home", currentUser: req.session.currentUser})
 });
 
+app.get('/browse', (req, res) => {
+  res.render('browse.ejs', {tabTitle: "Browse", currentUser: req.session.currentUser})
+});
+
 // SIGNUP CONTROLLER
 const signupController = require('./controllers/signup.js');
 app.use('/signup', signupController);
@@ -73,6 +77,10 @@ app.use('/signup', signupController);
 // LOGIN CONTROLLER
 const loginController = require('./controllers/login.js');
 app.use('/login', loginController);
+
+// PROMPT CONTROLLER
+const promptController = require('./controllers/prompts.js');
+app.use('/prompts', promptController);
 
 // ===========
 //  LISTENER

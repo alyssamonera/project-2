@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <% include ../partials/head.ejs %>
+  </head>
+  <body>
+
+    <header>
+      <% include ../partials/header.ejs %>
+    </header>
+
+    <main class="new-prompt">
+      <h2>Add a new prompt</h2>
+      <form action="/prompts" method="POST">
+
+        <label for="prompt">Prompt</label>
+        <textarea name="prompt" placeholder="What if...?"></textarea>
+
+        <label for="tags">Tags (add #s)</label>
+        <input type="text" name="tags" placeholder="#original #horror #etc">
+
+        <input type="submit" value="Submit">
+
+
+      </form>
+    </main>
+
+    <footer>
+      <% include ../partials/footer.ejs%>
+    </footer>
+
+  </body>
+</html>
