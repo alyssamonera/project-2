@@ -8,13 +8,9 @@
       <% include ../partials/header.ejs%>
     </header>
 
-    <main class="prompt-index">
-      <% for (let data of allPrompts) { %>
-        <div class="prompt-div">
-          <h3><a href="/prompts/<%=data.id%>"><%= data.prompt %></a></h3>
-          <h5>--<%= data.author %></h5>
-        </div>
-      <% }%>
+    <main class="prompt-show">
+      <h3><%= prompt.prompt %></h3>
+      <h5>--<%= prompt.author %></h5>
     </main>
 
     <footer>

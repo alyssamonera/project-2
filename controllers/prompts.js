@@ -41,6 +41,11 @@ prompt.get('/', (req, res) => {
 });
 
 // SHOW
+prompt.get('/:id', (req, res) => {
+  Prompt.findById(req.params.id, (err, prompt) => {
+    res.render('prompts/show.ejs', {tabTitle: "Read prompt", currentUser: req.session.currentUser, prompt: prompt})
+  })
+});
 
 // ========
 //  UPDATE
