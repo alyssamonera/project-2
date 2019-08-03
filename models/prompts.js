@@ -10,7 +10,7 @@ const promptSchema = mongoose.Schema({
   title: {type: String, required: true},
   body: String,
   author: {type: String, required: true},
-  tags: [String],
+  tags: Array,
   responses: [{author: String, body: String, date: Date}],
   likes: {type: Number, default: 0, min: 0}
 });
