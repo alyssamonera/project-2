@@ -50,31 +50,49 @@ prompt.post('/', (req, res) => {
 });
 
 // POST REPLY
-// prompt.post('/:id/reply', (req, res) => {
-//   // Creates tag array
-//   let tagArray = req.body.tags.split("#");
-//   tagArray.shift();
-//   req.body.tags = tagArray;
-//
-//   // Sets the author
-//   req.body.author = {};
-//   req.body.author.username = req.session.currentUser.username;
-//   req.body.author.id = req.session.currentUser._id;
-//
-//   // Sets the date
-//   req.body.date = new Date();
-//
-//   // Sets the prompt
-//   Models.Prompt.findById(req.params.id, (err, prompt) => {
-//     req.body.prompt = {};
-//     req.body.prompt.id = prompt.id;
-//     req.body.prompt.title = prompt.title;
-//   });
-//
-//   let reply = new Reply(req.body);
-//
-//
-// })
+prompt.post('/:id/reply', (req, res) => {
+  // Creates tag array
+  let tagArray = req.body.tags.split("#");
+  tagArray.shift();
+  req.body.tags = tagArray;
+
+  // Sets the author
+  req.body.author = {};
+  req.body.author.username = req.session.currentUser.username;
+  req.body.author.id = req.session.currentUser._id;
+
+  // Sets the prompt;
+  req.body.prompt = {};
+  req.body.prompt.id = req.params.id;
+  req.body.prompt.title = req.body.promptTitle;
+
+  // Sets the date
+  req.body.date = new Date();
+
+  let reply = new Models.Reply(req.body);
+
+  Models.Prompt.findById(req.params.id, (err, prompt) => {
+    prompt.replies.push(reply);
+    prompt.save();
+    Models.User.findById(prompt.author.id, (err, user) => {
+      user.prompts.id(req.params.id).replies.push(reply);
+      user.save();
+      Models.User.findById(req.body.author.id, (err, author) => {
+        author.replies.push(reply);
+        author.save();
+        reply.save();
+        console.log("AUTHOR.REPLIES=======");
+        console.log(author.replies);
+        console.log("USER.PROMPTS==========");
+        console.log(user.prompts);
+        console.log("PROMPT.REPLIES==========");
+        console.log(prompt.replies);
+        res.redirect(`/prompts/${req.params.id}`)
+      })
+    })
+  })
+
+});
 
 // ========
 //  READ

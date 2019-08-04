@@ -19,7 +19,10 @@ const promptSchema = mongoose.Schema({
     username: {type: String, required: true},
   },
   tags: [String],
-  responses: [{author: String, body: String, date: Date}],
+  replies: [
+    {author: {id: String, username: String},
+      title: String,
+      date: Date}],
   likes: {type: Number, default: 0, min: 0}
 });
 
@@ -58,7 +61,7 @@ const userSchema = mongoose.Schema({
 // ===================
 const User = mongoose.model('User', userSchema);
 const Prompt = mongoose.model('Prompts', promptSchema);
-const Reply = mongoose.model('Prompts', promptSchema);
+const Reply = mongoose.model('Replies', replySchema);
 
 
 // ===================

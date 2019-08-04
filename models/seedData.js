@@ -15,10 +15,16 @@ const hate = {
     username: "ahlisa"
   },
   tags: ["pov", "character study"],
-  likes: 3
+};
+
+const agarocks = {
+  username: "agarocks",
+  password: bcrypt.hashSync("green", bcrypt.genSaltSync(10)),
+  replies: []
 };
 
 module.exports = {
   user: ahlisa,
-  prompt: hate
+  prompt: hate,
+  author: agarocks
 }
