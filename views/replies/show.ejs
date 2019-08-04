@@ -10,6 +10,19 @@
     </header>
 
     <main>
+      <a href="/prompts/<%= reply.prompt.id %>">
+        <button class="btn btn-dark">
+          Back
+        </button>
+      </a>
+
+      <br><br>
+
+      <h4>Original prompt:</h4>
+      <blockquote cite="/prompts/<%=reply.prompt.id%>" class="quote">
+        <%= reply.prompt.title %>
+      </blockquote>
+
       <div class="reply">
         <h4><%= reply.title %></h4>
         <a href="/users/<%= reply.author.id %>" class="text-muted byline">

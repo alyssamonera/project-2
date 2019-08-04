@@ -10,7 +10,9 @@
     </header>
 
     <main class="user-show">
-      <img src="<%= user.avatar%>" alt="avatar" class="img-thumbnail">
+      <% if (user.avatar) { %>
+        <img src="<%= user.avatar%>" alt="avatar" class="img-thumbnail">
+      <% }%>
 
       <h2><%= user.username %></h2>
       <br>
@@ -18,6 +20,15 @@
       <ul>
         <% for (let prompt of user.prompts) { %>
           <li><a href="/prompts/<%= prompt._id %>"><%= prompt.title %></a></li>
+        <% }%>
+      </ul>
+
+      <h5>Stories written by <%= user.username %></h5>
+      <ul>
+        <% for (let story of user.replies) { %>
+          <li> <a href="/prompts/<%= story.prompt.id %>/replies/<%= story._id%>">
+            <%= story.title %>
+          </a> </li>
         <% }%>
       </ul>
 
