@@ -15,6 +15,11 @@ const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const db = mongoose.connection;
 
+// SEED
+const seed = require('./models/seedData.js');
+const User = require('./models/users.js');
+const Prompt = require('./models/prompts.js');
+
 // =======
 //  PORT
 // =======
@@ -61,14 +66,22 @@ app.use(session({
 // ===========
 //   ROUTES
 // ===========
+
 // localhost:3000
 app.get('/', (req, res) => {
   res.render('index.ejs', {tabTitle: "Home", currentUser: req.session.currentUser})
 });
 
-app.get('/browse', (req, res) => {
-  res.render('browse.ejs', {tabTitle: "Browse", currentUser: req.session.currentUser})
-});
+// SEED
+app.get('/seed', (req, res) => {
+  const user = new User(seed.user);
+  const prompt = new Prompt(seed.prompt);
+  user.prompts.push(prompt);
+  prompt.author.id = user._id;
+  user.save();
+  prompt.save();
+  res.redirect('/')
+})
 
 // SIGNUP CONTROLLER
 const signupController = require('./controllers/signup.js');
