@@ -118,7 +118,14 @@ prompt.get('/:promptId/replies/:replyId', (req, res) => {
       res.render('replies/show.ejs', {tabTitle: "Read story", currentUser: req.session.currentUser, reply: reply})
     }
   })
-})
+});
+
+// SHOW TAGGED POSTS
+prompt.get('/tagged/:tag', (req, res) => {
+  Models.Prompt.find({tags: req.params.tag}, (err, prompts) => {
+    res.render('tagged/index.ejs', {tabTitle: `Tagged ${req.params.tag}`, currentUser: req.session.currentUser, prompts: prompts, tag: req.params.tag})
+  })
+});
 
 // ========
 //  UPDATE

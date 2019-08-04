@@ -25,7 +25,11 @@
         <div class="prompt-stats">
           <ul>
             <% for (let tag of prompt.tags) { %>
-              <li>#<%= tag %></li>
+              <li>
+                <a href="/prompts/tagged/<%= tag %>">
+                  #<%= tag %>
+                </a>
+              </li>
             <% }%>
           </ul>
         </div>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <% include ../partials/head.ejs %>
+  </head>
+  <body>
+    <header>
+      <% include ../partials/header.ejs%>
+      <link rel="stylesheet" href="/css/prompts.css">
+    </header>
+
+    <main class="tagged-index">
+
+      <h4>Tagged: <%= tag %></h4>
+
+
+      <% for (let data of prompts) { %>
+        <blockquote class="blockquote">
+          <a href="/prompts/<%=data.id%>">
+            <p class="mb-0">
+            <%= data.title %>
+            </p>
+          </a>
+
+          <a href="/users/<%= data.author.id%>">
+            <p class="blockquote-footer text-muted byline">
+              <%= data.author.username %>
+            </p></a>
+        </blockquote>
+      <% }%>
+    </main>
+
+    <footer>
+      <% include ../partials/footer.ejs %>
+    </footer>
+  </body>
+</html>
