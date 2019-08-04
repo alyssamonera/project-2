@@ -6,29 +6,42 @@
   <body>
     <header>
       <% include ../partials/header.ejs%>
+      <link rel="stylesheet" href="/css/prompts.css">
     </header>
 
-    <main class="prompt-show">
-      <h3><%= prompt.title %></h3>
-      <% if (prompt.body) { %>
-        <p><%= prompt.body %></p>
-      <% }%>
-      <h5>--<a href="/users/<%= prompt.author.id %>"><%= prompt.author.username %></a></h5>
-
-      <ul>
-        <% for (let tag of prompt.tags) { %>
-          <li><%= tag %></li>
+    <main>
+      <div class="prompt-show">
+        <h3><%= prompt.title %></h3>
+        <% if (prompt.body) { %>
+          <p><%= prompt.body %></p>
         <% }%>
-      </ul>
+        <a href="/users/<%= prompt.author.id %>">
+          <p class="blockquote-footer text-muted byline">
+            <%= prompt.author.username %>
+          </p></a>
+      </div>
 
-      <% if (currentUser) { %>
-        <% if (prompt.author.username === currentUser.username) { %>
-          <form class="" action="/prompts/<%= prompt.id%>?_method=DELETE" method="POST">
-            <input type="submit" value="Delete">
-          </form>
-          <a href="/prompts/<%= prompt.id %>/edit"><button class="btn">Edit</button></a>
-        <% }%>
-      <% }%>
+      <div class="prompt-details">
+        <div class="prompt-stats">
+          <ul>
+            <% for (let tag of prompt.tags) { %>
+              <li>#<%= tag %></li>
+            <% }%>
+          </ul>
+        </div>
+
+        <div class="prompt-options">
+          <% if (currentUser) { %>
+            <% if (prompt.author.username === currentUser.username) { %>
+              <a href="/prompts/<%= prompt.id %>/edit"><button class="btn btn-light">Edit</button></a>
+
+              <form class="" action="/prompts/<%= prompt.id%>?_method=DELETE" method="POST">
+                <input type="submit" value="Delete" class="btn btn-light">
+              </form>
+            <% }%>
+          <% }%>
+        </div>
+      </div>
 
     </main>
 

@@ -1,4 +1,4 @@
-/* INDEX/SHOW DISPLAY */
+/* INDEX DISPLAY */
 
 .mb-0{
   font-size: 2em;
@@ -9,6 +9,43 @@
   text-align: right;
   margin-right: 3em;
   font-size: 1.2em;
+}
+
+/* SHOW DISPLAY */
+
+.prompt-show{
+  border-bottom: 0.1px solid #ccc;
+}
+
+.prompt-details{
+  display: flex;
+  justify-content: space-between;
+}
+
+.prompt-stats ul{
+  list-style-type: none;
+  display: flex;
+  justify-content: left;
+  padding: 0;
+}
+
+.prompt-stats li{
+  margin: 0;
+  margin-right: 1em;
+}
+
+.prompt-options{
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.prompt-options form, .prompt-options button{
+  margin-left: 2em;
+}
+
+.prompt-options button, .prompt-options input{
+  border: 1px solid black;
 }
 
 /* FORMS */
