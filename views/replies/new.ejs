@@ -50,6 +50,19 @@
           <a href="/signup"><button class="btn">Sign Up</button></a>
         </div>
       </div>
+    <% } %>
+
+    <% for (let reply of currentUser.replies) { %>
+      <% if (reply.prompt.id === promptId){ %>
+        <div class="my-modal">
+          <div class="my-modal-textbox">
+            <h3>Hold up!</h3>
+            <p>You already filled this prompt.</p>
+            <a href="/prompts/<%= promptId %>"><button class="btn">Back</button></a>
+          </div>
+        </div>
+        <% break %>
+      <% } %>
     <% }%>
 
 
