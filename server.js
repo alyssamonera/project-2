@@ -17,8 +17,7 @@ const db = mongoose.connection;
 
 // SEED
 const seed = require('./models/seedData.js');
-const User = require('./models/users.js');
-const Prompt = require('./models/prompts.js');
+const Models = require('./models/models.js')
 
 // =======
 //  PORT
@@ -74,8 +73,8 @@ app.get('/', (req, res) => {
 
 // SEED
 app.get('/seed', (req, res) => {
-  const user = new User(seed.user);
-  const prompt = new Prompt(seed.prompt);
+  const user = new Models.User(seed.user);
+  const prompt = new Models.Prompt(seed.prompt);
   user.prompts.push(prompt);
   prompt.author.id = user._id;
   user.save();

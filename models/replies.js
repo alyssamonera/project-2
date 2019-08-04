@@ -1,25 +1,28 @@
 // ====================================================================
-//                          PROMPT MODEL
+//                          REPLY MODEL
 // ====================================================================
 
 // DEPENDENCIES
 const mongoose = require('mongoose');
-var ObjectId = mongoose.Schema.Types.ObjectId;
 
 // SCHEMA
-const promptSchema = mongoose.Schema({
-  title: {type: String, required: true},
-  body: String,
+const replySchema = mongoose.Schema({
+  title: String,
+  body: {type: String, required: true},
   author: {
     id: {type: String, required: true},
     username: {type: String, required: true},
   },
+  prompt: {
+    id: {type: String, required: true},
+    title: {type: String, required: true}
+  },
   tags: Array,
-  responses: [{author: String, body: String, date: Date}],
+  date: Date,
   likes: {type: Number, default: 0, min: 0}
 });
 
 // MODEL
 
 // EXPORT
-// module.exports = Prompt;
+// module.exports = Reply;

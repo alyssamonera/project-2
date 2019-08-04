@@ -1,8 +1,5 @@
-const Prompt = require('./prompts.js');
-const User = require('./users.js');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
-var ObjectId = mongoose.Schema.Types.ObjectId;
 
 const ahlisa = {
   username: "ahlisa",

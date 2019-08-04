@@ -3,7 +3,7 @@
 // ==============
 const express = require('express');
 const signup = express.Router();
-const User = require('../models/users.js');
+const Models = require('../models/models.js');
 const bcrypt = require('bcrypt');
 
 // ========
@@ -18,7 +18,7 @@ signup.get('/', (req, res) => {
 signup.post('/', (req, res) => {
     req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
 
-    User.create(req.body, (err, user) => {
+    Models.User.create(req.body, (err, user) => {
       if (err && err.code === 11000){
         console.log(err);
         res.render('signup/new.ejs', {tabTitle: "Sign Up", currentUser: req.session.currentUser, error: true})

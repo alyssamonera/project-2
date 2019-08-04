@@ -7,8 +7,7 @@
 // ==============
 const express = require('express');
 const prompt = express.Router();
-const Prompt = require('../models/prompts.js');
-const User = require('../models/users.js');
+const Models = require ('../models/models.js');
 
 // ========
 // CREATE
@@ -20,7 +19,7 @@ prompt.get('/new', (req, res) => {
 
 // NEW REPLY
 prompt.get('/:id/reply/new', (req, res) => {
-  Prompt.findById(req.params.id, (err, prompt) => {
+  Models.Prompt.findById(req.params.id, (err, prompt) => {
       if(err){console.log(err)}
       else {
         res.render('replies/new.ejs', {tabTitle: "New story", currentUser: req.session.currentUser, promptId: req.params.id, prompt: prompt})
@@ -40,9 +39,9 @@ prompt.post('/', (req, res) => {
   req.body.author.username = req.session.currentUser.username;
   req.body.author.id = req.session.currentUser._id;
 
-  let prompt = new Prompt(req.body);
+  let prompt = new Models.Prompt(req.body);
 
-  User.findById(req.body.author.id, (err, user) => {
+  Models.User.findById(req.body.author.id, (err, user) => {
     user.prompts.push(prompt);
     user.save();
     prompt.save();
@@ -51,20 +50,45 @@ prompt.post('/', (req, res) => {
 });
 
 // POST REPLY
+// prompt.post('/:id/reply', (req, res) => {
+//   // Creates tag array
+//   let tagArray = req.body.tags.split("#");
+//   tagArray.shift();
+//   req.body.tags = tagArray;
+//
+//   // Sets the author
+//   req.body.author = {};
+//   req.body.author.username = req.session.currentUser.username;
+//   req.body.author.id = req.session.currentUser._id;
+//
+//   // Sets the date
+//   req.body.date = new Date();
+//
+//   // Sets the prompt
+//   Models.Prompt.findById(req.params.id, (err, prompt) => {
+//     req.body.prompt = {};
+//     req.body.prompt.id = prompt.id;
+//     req.body.prompt.title = prompt.title;
+//   });
+//
+//   let reply = new Reply(req.body);
+//
+//
+// })
 
 // ========
 //  READ
 // ========
 // INDEX
 prompt.get('/', (req, res) => {
-  Prompt.find({}, (err, allPrompts) => {
+  Models.Prompt.find({}, (err, allPrompts) => {
     res.render('prompts/index.ejs', {tabTitle: "Browse prompts", currentUser: req.session.currentUser, allPrompts: allPrompts})
   })
 });
 
 // SHOW
 prompt.get('/:id', (req, res) => {
-  Prompt.findById(req.params.id, (err, prompt) => {
+  Models.Prompt.findById(req.params.id, (err, prompt) => {
     if (!prompt){
       res.send("<p>Hmm! That prompt doesn't exist. <a href='/'>Return to the homepage</a> </p>")
     } else {
@@ -78,7 +102,7 @@ prompt.get('/:id', (req, res) => {
 // ========
 // EDIT
 prompt.get('/:id/edit', (req, res) => {
-  Prompt.findById(req.params.id, (err, prompt) => {
+  Models.Prompt.findById(req.params.id, (err, prompt) => {
     if (!prompt){
       res.send("<p>Hmm! That prompt doesn't exist. <a href='/'>Return</a> </p>")
     } else if (!req.session.currentUser || req.session.currentUser.username != prompt.author.username){
@@ -95,10 +119,10 @@ prompt.put('/:id', (req, res) => {
   tagArray.shift();
   req.body.tags = tagArray;
 
-  Prompt.findByIdAndUpdate(req.params.id, req.body, (err, prompt) => {
+  Models.Prompt.findByIdAndUpdate(req.params.id, req.body, (err, prompt) => {
     if (err){console.log(err)}
     else {
-      User.findById(prompt.author.id, (err, user) => {
+      Models.User.findById(prompt.author.id, (err, user) => {
         let updatedPrompt = user.prompts.id(req.params.id);
         let submittedChanges = req.body;
         updatedPrompt.title = submittedChanges.title;
@@ -117,9 +141,9 @@ prompt.put('/:id', (req, res) => {
 // ========
 // DELETE
 prompt.delete('/:id', (req, res) => {
-  Prompt.findByIdAndRemove(req.params.id, (err, prompt) => {
+  Models.Prompt.findByIdAndRemove(req.params.id, (err, prompt) => {
     let userId = prompt.author.id;
-    User.findById(userId, (err, user) => {
+    Models.User.findById(userId, (err, user) => {
         user.prompts.id(prompt.id).remove();
         user.save();
         res.redirect('/prompts');

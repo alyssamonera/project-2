@@ -4,7 +4,7 @@
 const express = require('express');
 const login = express.Router();
 const bcrypt = require('bcrypt');
-const User = require('../models/users.js');
+const Models = require('../models/models.js');
 
 // ========
 // CREATE
@@ -12,7 +12,7 @@ const User = require('../models/users.js');
 // REDIRECT SOLUTION FROM: https://stackoverflow.com/questions/49244589/how-to-redirect-2-pages-back-with-express-js-node-js
 
 login.post('/', (req, res) => {
-  User.findOne({username: req.body.username}, (err, user) => {
+  Models.User.findOne({username: req.body.username}, (err, user) => {
     // Database error
     if (err){console.log(err)}
 

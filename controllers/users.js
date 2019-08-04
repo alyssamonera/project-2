@@ -7,8 +7,7 @@
 // ==============
 const express = require('express');
 const user = express.Router();
-const Prompt = require('../models/prompts.js');
-const User = require('../models/users.js');
+const Models = require('../models/models.js');
 const mongoose = require('mongoose');
 
 // ========
@@ -16,14 +15,14 @@ const mongoose = require('mongoose');
 // ========
 // INDEX
 user.get('/', (req, res) => {
-  User.find({}, (err, allUsers) => {
+  Models.User.find({}, (err, allUsers) => {
     res.render('users/index.ejs', {tabTitle: "Browse users", currentUser: req.session.currentUser, allUsers: allUsers})
   })
 });
 
 // SHOW
 user.get('/:id', (req, res) => {
-  User.findById(req.params.id, (err, user) => {
+  Models.User.findById(req.params.id, (err, user) => {
     if (!user){
       res.send("<p>Hmm! That page doesn't exist. <a href='/'>Return to the homepage</a> </p>")
     } else {
@@ -37,7 +36,7 @@ user.get('/:id', (req, res) => {
 // ========
 // EDIT
 user.get('/:id/edit', (req, res) => {
-  User.findById(req.params.id, (err, user) => {
+  Models.User.findById(req.params.id, (err, user) => {
     if (!user){
       res.send("<p>Hmm! That page doesn't exist. <a href='/'>Return</a> </p>")
     } else if (!req.session.currentUser || req.session.currentUser.username != user.username){
@@ -50,7 +49,7 @@ user.get('/:id/edit', (req, res) => {
 
 // PUT
 user.put('/:id', (req, res) => {
-  User.findByIdAndUpdate(req.params.id, req.body, (err, user) => {
+  Models.User.findByIdAndUpdate(req.params.id, req.body, (err, user) => {
     if (err){console.log(err)}
     else {
       res.redirect(`/users/${req.params.id}`)
@@ -63,7 +62,7 @@ user.put('/:id', (req, res) => {
 // ========
 // DELETE
 user.delete('/:id', (req, res) => {
-  User.findByIdAndRemove(req.params.id, (err, user) => {
+  Models.User.findByIdAndRemove(req.params.id, (err, user) => {
     if (err){console.log(err)}
     else{
       res.redirect('/users')
