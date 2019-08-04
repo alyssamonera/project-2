@@ -2,6 +2,7 @@
 
 :root{
   --beige: rgb(255,200,150);
+  --scarlet: rgb(150,0,0);
   --Merri: 'Merriweather', serif;
   --Ubuntu: 'Ubuntu', sans-serif;
 }
@@ -12,6 +13,15 @@ h1{
 
 a{
   color: black;
+}
+
+a:hover{
+  color: var(--scarlet);
+  text-decoration: none;
+}
+
+.btn{
+  font-family: var(--Ubuntu)
 }
 
 /* MAIN */

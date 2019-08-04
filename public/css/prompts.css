@@ -1,6 +1,11 @@
-/* MAIN */
+/* INDEX/SHOW DISPLAY */
+
+
+
+/* FORMS */
 
 .new-prompt{
+  margin-top: 4em;
   margin-left: 1em;
 }
 
@@ -8,13 +13,17 @@ label{
   text-align: left;
 }
 
+input[type=text], textarea{
+  outline-color: black;
+}
+
 input[type=text]{
   display: inline;
   text-align: left;
-  font-size: 1.5em;
 }
 
 input[type=submit]{
+  display: block;
   margin: 0;
   margin-bottom: 1em;
 }
@@ -22,7 +31,6 @@ input[type=submit]{
 textarea{
   display: block;
   text-align: left;
-  font-size: 2em;
   height: 20vh;
   width: 90%;
   margin-bottom: 1em;

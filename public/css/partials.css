@@ -28,6 +28,7 @@ header li{
 /* FOOTER */
 footer{
   margin: 0 auto;
+  margin-top: 7em;
   display: flex;
   justify-content: space-between;
   border-top: 1px solid black;
