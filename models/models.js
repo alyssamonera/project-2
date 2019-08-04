@@ -54,7 +54,7 @@ const userSchema = mongoose.Schema({
   password: {type: String, required: true},
   prompts: [promptSchema],
   replies: [replySchema],
-  avatar: String
+  avatar: {type: String, default: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/500px-User_font_awesome.svg.png"}
 });
 
 // ===================
