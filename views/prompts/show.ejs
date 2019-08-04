@@ -46,11 +46,22 @@
 
       <div class="prompt-responses">
         <% for (let reply of prompt.replies) { %>
-          <h4><%= reply.title %></h4>
-          <a href="/users/<%= prompt.author.id %>" class="text-muted byline">
-              by <%= reply.author.username %>
-          </a>
-          <p><%= reply.body %></p>
+
+          <div class="reply">
+            <h4><%= reply.title %></h4>
+            <a href="/users/<%= reply.author.id %>" class="text-muted byline">
+                by <%= reply.author.username %>
+            </a>
+
+            <% let cutBody = reply.body.slice(0, 200);%>
+            <p>
+              <%= cutBody %>...
+              <a class="readmore" href="/prompts/<%=prompt.id%>/replies/<%= reply._id %>">
+                Read more
+              </a>
+            </p>
+          </div>
+
         <% }%>
       </div>
 

@@ -98,7 +98,7 @@ prompt.get('/', (req, res) => {
   })
 });
 
-// SHOW
+// SHOW PROMPT
 prompt.get('/:id', (req, res) => {
   Models.Prompt.findById(req.params.id, (err, prompt) => {
     if (!prompt){
@@ -108,6 +108,17 @@ prompt.get('/:id', (req, res) => {
     }
   })
 });
+
+// SHOW REPLY
+prompt.get('/:promptId/replies/:replyId', (req, res) => {
+  Models.Reply.findById(req.params.replyId, (err, reply) => {
+    if (!reply){
+      res.send(`<p>Hmm! That story doesn't exist. <a href='/prompts/${req.params.promptId}'>Return</a> </p>`)
+    } else {
+      res.render('replies/show.ejs', {tabTitle: "Read story", currentUser: req.session.currentUser, reply: reply})
+    }
+  })
+})
 
 // ========
 //  UPDATE

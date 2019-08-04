@@ -48,6 +48,26 @@
   border: 1px solid black;
 }
 
+/* RESPONSE SECTION */
+
+.prompt-responses{
+  margin: 1em;
+}
+
+.reply{
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 1em;
+}
+
+.readmore{
+  color: var(--scarlet);
+}
+
+.readmore:hover{
+  color: #888;
+}
+
 /* FORMS */
 
 .new-prompt{
