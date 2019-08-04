@@ -22,14 +22,15 @@
   justify-content: space-between;
 }
 
-.prompt-stats ul{
+.prompt-stats ul, .reply-stats ul{
   list-style-type: none;
   display: flex;
   justify-content: left;
   padding: 0;
+  margin-left: 1em;
 }
 
-.prompt-stats li{
+.prompt-stats li, .reply-stats li{
   margin: 0;
   margin-right: 1em;
 }

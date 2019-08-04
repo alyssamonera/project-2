@@ -12,7 +12,7 @@
     <main>
       <a href="/prompts/<%= reply.prompt.id %>">
         <button class="btn btn-dark">
-          Back
+          Back to the prompt
         </button>
       </a>
 
@@ -30,6 +30,18 @@
         </a>
 
         <p><%= reply.body %></p>
+      </div>
+
+      <div class="reply-stats">
+        <ul>
+          <% for (let tag of reply.tags) { %>
+            <li>
+              <a href="/prompts/replies/tagged/<%= tag %>">
+                #<%= tag%>
+              </a>
+            </li>
+          <% }%>
+        </ul>
       </div>
     </main>
 

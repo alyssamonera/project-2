@@ -54,6 +54,7 @@ prompt.post('/:id/reply', (req, res) => {
   // Creates tag array
   let tagArray = req.body.tags.split("#");
   tagArray.shift();
+  tagArray[0] = tagArray[0].substring(0, tagArray[0].length - 1);
   req.body.tags = tagArray;
 
   // Sets the author
@@ -120,12 +121,19 @@ prompt.get('/:promptId/replies/:replyId', (req, res) => {
   })
 });
 
-// SHOW TAGGED POSTS
+// SHOW TAGGED PROMPTS
 prompt.get('/tagged/:tag', (req, res) => {
   Models.Prompt.find({tags: req.params.tag}, (err, prompts) => {
-    res.render('tagged/index.ejs', {tabTitle: `Tagged ${req.params.tag}`, currentUser: req.session.currentUser, prompts: prompts, tag: req.params.tag})
+    res.render('tagged/index.ejs', {tabTitle: `Tagged ${req.params.tag}`, currentUser: req.session.currentUser, posts: prompts, tag: req.params.tag})
   })
 });
+
+// SHOW TAGGED REPLIES
+prompt.get('/replies/tagged/:tag', (req, res) => {
+  Models.Reply.find({tags: req.params.tag}, (err, replies) => {
+    res.render('tagged/index.ejs', {tabTitle: `Tagged ${req.params.tag}`, currentUser: req.session.currentUser, posts: replies, tag: req.params.tag})
+  })
+})
 
 // ========
 //  UPDATE
