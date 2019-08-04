@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <% include ../partials/head.ejs %>
+    <link rel="stylesheet" href="/css/prompts.css">
+  </head>
+  <body>
+
+    <header>
+      <% include ../partials/header.ejs %>
+    </header>
+
+    <main class="new-story">
+      <a href="/prompts/<%=promptId%>">
+        <button class="btn btn-dark">Back</button>
+      </a>
+      <br><br>
+
+      <h2>Write a response</h2>
+      <h4>Original prompt:</h4>
+      <blockquote cite="/prompts/<%=promptId%>">
+        <%= prompt.title %>
+      </blockquote>
+
+      <form action="/prompts/<%=promptId%>/reply" method="POST">
+
+        <label for="title">Title (optional)</label>
+        <input type=text name="title" placeholder="Title">
+
+        <label for="body">Body</label>
+        <textarea name="body" placeholder="Your response goes here."></textarea>
+
+        <label for="tags">Tags (add #s)</label>
+        <input type="text" name="tags" placeholder="#original #horror">
+
+        <input type="submit" value="Submit" class="btn btn-dark">
+
+
+      </form>
+    </main>
+
+    <% if (!currentUser) { %>
+      <div class="my-modal">
+        <div class="my-modal-textbox">
+          <h3>Hold up!</h3>
+          <p>You need to log in to do that.</p>
+          <a href="/login"><button class="btn">Log In</button></a>
+          <a href="/signup"><button class="btn">Sign Up</button></a>
+        </div>
+      </div>
+    <% }%>
+
+
+    <footer>
+      <% include ../partials/footer.ejs%>
+    </footer>
+
+  </body>
+</html>

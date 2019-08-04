@@ -13,12 +13,22 @@ const User = require('../models/users.js');
 // ========
 // CREATE
 // ========
-// NEW
+// NEW PROMPT
 prompt.get('/new', (req, res) => {
   res.render('prompts/new.ejs', {tabTitle: "New prompt", currentUser: req.session.currentUser})
 });
 
-// POST
+// NEW REPLY
+prompt.get('/:id/reply/new', (req, res) => {
+  Prompt.findById(req.params.id, (err, prompt) => {
+      if(err){console.log(err)}
+      else {
+        res.render('replies/new.ejs', {tabTitle: "New story", currentUser: req.session.currentUser, promptId: req.params.id, prompt: prompt})
+      }
+  })
+});
+
+// POST PROMPT
 prompt.post('/', (req, res) => {
   // Creates tag array
   let tagArray = req.body.tags.split("#");
@@ -39,6 +49,8 @@ prompt.post('/', (req, res) => {
     res.redirect('/prompts');
   })
 });
+
+// POST REPLY
 
 // ========
 //  READ

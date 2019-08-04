@@ -38,8 +38,9 @@
               <form class="" action="/prompts/<%= prompt.id%>?_method=DELETE" method="POST">
                 <input type="submit" value="Delete" class="btn btn-light">
               </form>
-            <% }%>
-          <% }%>
+            <% } else { %>
+              <a href="/prompts/<%= prompt.id %>/reply/new"><button class="btn btn-light">Reply</button></a>
+          <% }}%>
         </div>
       </div>
 
