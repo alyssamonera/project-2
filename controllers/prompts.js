@@ -81,12 +81,6 @@ prompt.post('/:id/reply', (req, res) => {
         author.replies.push(reply);
         author.save();
         reply.save();
-        console.log("AUTHOR.REPLIES=======");
-        console.log(author.replies);
-        console.log("USER.PROMPTS==========");
-        console.log(user.prompts);
-        console.log("PROMPT.REPLIES==========");
-        console.log(prompt.replies);
         res.redirect(`/prompts/${req.params.id}`)
       })
     })

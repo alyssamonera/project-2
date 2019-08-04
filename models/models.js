@@ -22,6 +22,7 @@ const promptSchema = mongoose.Schema({
   replies: [
     {author: {id: String, username: String},
       title: String,
+      body: String,
       date: Date}],
   likes: {type: Number, default: 0, min: 0}
 });
@@ -30,7 +31,7 @@ const promptSchema = mongoose.Schema({
 //    REPLY SCHEMA
 // ===================
 const replySchema = mongoose.Schema({
-  title: String,
+  title: {type: String, required: true},
   body: {type: String, required: true},
   author: {
     id: {type: String, required: true},

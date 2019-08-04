@@ -44,6 +44,16 @@
         </div>
       </div>
 
+      <div class="prompt-responses">
+        <% for (let reply of prompt.replies) { %>
+          <h4><%= reply.title %></h4>
+          <a href="/users/<%= prompt.author.id %>" class="text-muted byline">
+              by <%= reply.author.username %>
+          </a>
+          <p><%= reply.body %></p>
+        <% }%>
+      </div>
+
     </main>
 
     <footer>
