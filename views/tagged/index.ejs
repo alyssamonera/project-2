@@ -16,7 +16,12 @@
 
       <% for (let data of posts) { %>
         <blockquote class="blockquote">
-          <a href="/prompts/<%=data.id%>">
+          <% if (type === "prompt"){ %>
+            <a href="/prompts/<%=data.id%>">
+          <% } else if (type === "reply"){ %>
+            <a href="/prompts/<%=data.prompt.id %>/replies/<%= data.id %>">
+          <% }%>
+
             <p class="mb-0">
             <%= data.title %>
             </p>

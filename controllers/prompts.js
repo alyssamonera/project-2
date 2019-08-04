@@ -124,14 +124,14 @@ prompt.get('/:promptId/replies/:replyId', (req, res) => {
 // SHOW TAGGED PROMPTS
 prompt.get('/tagged/:tag', (req, res) => {
   Models.Prompt.find({tags: req.params.tag}, (err, prompts) => {
-    res.render('tagged/index.ejs', {tabTitle: `Tagged ${req.params.tag}`, currentUser: req.session.currentUser, posts: prompts, tag: req.params.tag})
+    res.render('tagged/index.ejs', {tabTitle: `Tagged ${req.params.tag}`, currentUser: req.session.currentUser, posts: prompts, type: "prompt", tag: req.params.tag})
   })
 });
 
 // SHOW TAGGED REPLIES
 prompt.get('/replies/tagged/:tag', (req, res) => {
   Models.Reply.find({tags: req.params.tag}, (err, replies) => {
-    res.render('tagged/index.ejs', {tabTitle: `Tagged ${req.params.tag}`, currentUser: req.session.currentUser, posts: replies, tag: req.params.tag})
+    res.render('tagged/index.ejs', {tabTitle: `Tagged ${req.params.tag}`, currentUser: req.session.currentUser, posts: replies, type: "reply", tag: req.params.tag})
   })
 })
 
