@@ -1,6 +1,15 @@
 /* INDEX/SHOW DISPLAY */
 
+.mb-0{
+  font-size: 2em;
+  text-align: center;
+}
 
+.byline{
+  text-align: right;
+  margin-right: 3em;
+  font-size: 1.2em;
+}
 
 /* FORMS */
 

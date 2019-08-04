@@ -6,14 +6,23 @@
   <body>
     <header>
       <% include ../partials/header.ejs%>
+      <link rel="stylesheet" href="/css/prompts.css">
     </header>
 
     <main class="prompt-index">
       <% for (let data of allPrompts) { %>
-        <div class="prompt-div">
-          <h3><a href="/prompts/<%=data.id%>"><%= data.title %></a></h3>
-          <h5>--<a href="/users/<%= data.author.id%>"><%= data.author.username %></a></h5>
-        </div>
+        <blockquote class="blockquote">
+          <a href="/prompts/<%=data.id%>">
+            <p class="mb-0">
+            <%= data.title %>
+            </p>
+          </a>
+
+          <a href="/users/<%= data.author.id%>">
+            <p class="blockquote-footer text-muted byline">
+              <%= data.author.username %>
+            </p></a>
+        </blockquote>
       <% }%>
     </main>
 
