@@ -1,7 +1,17 @@
 /* GLOBAL */
 
 :root{
-  --bright-blue: rgb(50,100,255);
+  --beige: rgb(255,200,150);
+  --Merri: 'Merriweather', serif;
+  --Ubuntu: 'Ubuntu', sans-serif;
+}
+
+h1{
+  font-family: var(--Merri);
+}
+
+a{
+  color: black;
 }
 
 /* MAIN */
@@ -13,7 +23,7 @@ main{
 /* HOME PAGE */
 
 .home-page{
-  margin: 10em 0;
+  margin: 3em;
 }
 
 .home-page h2{

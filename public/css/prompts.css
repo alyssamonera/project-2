@@ -42,9 +42,10 @@ textarea{
 }
 
 .my-modal-textbox{
-  background-color: var(--bright-blue);
-  color: white;
+  background-color: var(--beige);
+  border: 1px solid black;
   text-align: center;
   padding: 1em;
   margin: 15em auto;
+  width: 80%;
 }

@@ -3,13 +3,22 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  margin: 1em;
+}
+
+.title-links{
+  display: flex;
+}
+
+.title-links button{
+  margin-left: 1em;
 }
 
 header ul{
   list-style-type: none;
+  border: 1px solid black;
   display: flex;
   justify-content: center;
-  background-color:
 }
 
 header li{
@@ -20,18 +29,22 @@ header li{
 footer{
   margin: 0 auto;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  border-top: 1px solid black;
+  position: relative;
+  bottom: 0;
 }
 
-.footer-about, .footer-links, .footer-connect{
+.footer-about, .footer-connect{
+  margin: 1em;
   width: 30%;
 }
 
-.footer-links, .footer-connect{
+.footer-connect{
   text-align: center;
 }
 
-.footer-links ul, .footer-connect ul{
+.footer-connect ul{
   list-style-type: none;
   display: block;
   margin: 0 auto;

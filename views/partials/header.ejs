@@ -4,12 +4,12 @@
   <div class="title-links">
     <% if (currentUser) { %>
       <form action="/login?_method=DELETE" method="POST">
-        <input type="submit" value="Log Out">
+        <input type="submit" value="Log Out" class="btn btn-dark">
       </form>
-      <a href="#"><button>My Account</button></a>
+      <a href="#"><button class="btn btn-dark">Account</button></a>
     <% } else { %>
-      <a href="/login"><button>Log In</button></a>
-      <a href="/signup"><button>Sign Up</button></a>
+      <a href="/login"><button class="btn btn-dark">Log In</button></a>
+      <a href="/signup"><button class="btn btn-dark">Sign Up</button></a>
     <% }%>
   </div>
 </div>
