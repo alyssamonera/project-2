@@ -6,13 +6,15 @@
   <body>
     <header>
       <% include ../partials/header.ejs%>
+      <link rel="stylesheet" href="/css/users.css">
     </header>
 
     <main class="user-show">
-      <img src="<%= user.avatar%>" alt="avatar">
+      <img src="<%= user.avatar%>" alt="avatar" class="img-thumbnail">
 
       <h2><%= user.username %></h2>
-
+      <br>
+      <h5>Prompts written by <%= user.username%></h3>
       <ul>
         <% for (let prompt of user.prompts) { %>
           <li><a href="/prompts/<%= prompt._id %>"><%= prompt.title %></a></li>
