@@ -21,7 +21,8 @@
       <div class="prompt-show">
         <h3><%= prompt.title %></h3>
         <% if (prompt.body) { %>
-          <p><%= prompt.body %></p>
+          <% prompt.body = prompt.body.replace(/\n/g, "<br />") %>
+          <p><%- prompt.body %></p>
         <% }%>
         <a href="/users/<%= prompt.author.id %>">
           <p class="blockquote-footer text-muted byline">

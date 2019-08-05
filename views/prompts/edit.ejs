@@ -11,14 +11,14 @@
     </header>
 
     <main class="edit-prompt">
-      <h2>Add a new prompt</h2>
+      <h2>Edit your prompt</h2>
       <form action="/prompts/<%= prompt.id %>?_method=PUT" method="POST">
 
         <label for="title">Prompt</label>
         <input type=text name="title" value="<%= prompt.title %>">
 
         <label for="body">Details</label>
-        <textarea name="body"><% if (prompt.body){ %><%= prompt.body %><% }%></textarea>
+        <textarea name="body"><% if (prompt.body){ %><%- prompt.body %><% }%></textarea>
 
         <label for="tags">Tags (add #s)</label>
         <input type="text" name="tags" value="<% for (let tag of prompt.tags) { %>#<%= tag %> <%}%>">
