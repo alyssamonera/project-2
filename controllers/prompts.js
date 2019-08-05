@@ -216,7 +216,6 @@ prompt.put('/:id', (req, res) => {
 prompt.put('/:promptId/replies/:replyId', (req, res) => {
   req.body.tags = tagSort.arrangeTags(req.body.tags.split("#"))
 
-
   Models.Reply.findByIdAndUpdate(req.params.replyId, req.body, (err, reply) => {
     Models.Prompt.findById(req.params.promptId, (err, prompt) => {
       prompt.replies.id(req.params.replyId).set(req.body);

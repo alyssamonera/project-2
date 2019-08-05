@@ -25,7 +25,12 @@
         <input type=text name="title" placeholder="What if...?">
 
         <label for="body">Details</label>
-        <textarea name="body" placeholder="Explain your prompt. (Optional)"></textarea>
+        <div id="add-prompt">
+          <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script> <script type="text/javascript">
+                bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
+          </script>
+          <textarea name="body" placeholder="Explain your prompt. (Optional)"></textarea>
+        </div>
 
         <label for="tags">Tags (add #s)</label>
         <input type="text" name="tags" placeholder="#character study #dialogue">
