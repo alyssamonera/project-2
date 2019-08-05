@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <% include ../partials/head.ejs %>
+    <link rel="stylesheet" href="/css/prompts.css">
+  </head>
+  <body>
+
+    <header>
+      <% include ../partials/header.ejs %>
+    </header>
+
+    <main class="new-story">
+      <a href="/prompts/<%=reply.prompt.id%>">
+        <button class="btn btn-dark">Back</button>
+      </a>
+      <br><br>
+
+      <h2>Edit your response</h2>
+      <h4>Original prompt:</h4>
+      <blockquote cite="/prompts/<%=reply.prompt.id%>">
+        <%= reply.prompt.title %>
+      </blockquote>
+
+      <form action="/prompts/<%=reply.prompt.id%>/replies/<%=reply._id%>?_method=PUT" method="POST">
+
+        <label for="title">Title (optional)</label>
+        <input type=text name="title"
+        <% if (reply.title){ %>
+          value="<%= reply.title %>"
+        <% } else { %>
+          placeholder="Title"
+        <% }%>
+        />
+
+        <label for="body">Body</label>
+        <textarea name="body"><%= reply.body %></textarea>
+
+        <label for="tags">Tags (add #s)</label>
+        <input type="text" name="tags"
+        value = "<% for (let tag of reply.tags) { %>#<%= tag %> <% } %>"/>
+
+        <input type="submit" value="Submit" class="btn btn-dark">
+
+
+      </form>
+    </main>
+
+    <% if (!currentUser) { %>
+      <div class="my-modal">
+        <div class="my-modal-textbox">
+          <h3>Hold up!</h3>
+          <p>You need to log in to do that.</p>
+          <a href="/login"><button class="btn">Log In</button></a>
+          <a href="/signup"><button class="btn">Sign Up</button></a>
+        </div>
+      </div>
+    <% } else if (currentUser.username != reply.author.username) { %>
+      <div class="my-modal">
+        <div class="my-modal-textbox">
+          <h3>Hold up!</h3>
+          <p>You don't have permission to edit this page.</p>
+          <a href="/prompts/<%=reply.prompt.id%>/replies/<%= reply._id %>"><button class="btn">Back</button></a>
+        </div>
+      </div>
+    <% }%>
+
+
+    <footer>
+      <% include ../partials/footer.ejs%>
+    </footer>
+
+  </body>
+</html>

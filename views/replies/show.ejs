@@ -43,6 +43,21 @@
           <% }%>
         </ul>
       </div>
+
+      <div class="reply-options">
+        <% if (currentUser) { %>
+          <% if (reply.author.username === currentUser.username) { %>
+            <a href="/prompts/<%= reply.prompt.id %>/replies/<%= reply._id %>/edit">
+              <button class="btn btn-light">
+                Edit
+              </button></a>
+
+            <form class="" action="/prompts/<%= reply.prompt.id%>/replies/<%= reply._id%>?_method=DELETE" method="POST">
+              <input type="submit" value="Delete" class="btn btn-light">
+            </form>
+          <% } %>
+        <% }%>
+      </div>
     </main>
 
     <footer>

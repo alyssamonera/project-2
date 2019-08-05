@@ -138,7 +138,7 @@ prompt.get('/replies/tagged/:tag', (req, res) => {
 // ========
 //  UPDATE
 // ========
-// EDIT
+// EDIT PROMPT
 prompt.get('/:id/edit', (req, res) => {
   Models.Prompt.findById(req.params.id, (err, prompt) => {
     if (!prompt){
@@ -149,12 +149,24 @@ prompt.get('/:id/edit', (req, res) => {
       res.render('prompts/edit.ejs', {tabTitle: "Edit prompt", currentUser: req.session.currentUser, prompt: prompt})
     }
   })
+});
+
+// EDIT REPLY
+prompt.get('/:promptId/replies/:replyId/edit', (req, res) => {
+  Models.Reply.findById(req.params.replyId, (err, reply) => {
+    if (!reply){
+      res.send(`<p>Hmm! That story doesn't exist. <a href='/prompts/${req.params.promptId}'>Return</a> </p>`)
+    } else {
+      res.render('replies/edit.ejs', {tabTitle: "Edit story", currentUser: req.session.currentUser, reply: reply})
+    }
+  })
 })
 
-// PUT
+// PUT PROMPT
 prompt.put('/:id', (req, res) => {
   let tagArray = req.body.tags.split("#");
   tagArray.shift();
+  tagArray[0] = tagArray[0].substring(0, tagArray[0].length - 1);
   req.body.tags = tagArray;
 
   Models.Prompt.findByIdAndUpdate(req.params.id, req.body, (err, prompt) => {
@@ -173,6 +185,26 @@ prompt.put('/:id', (req, res) => {
     }
   })
 });
+
+// PUT REPLY
+prompt.put('/:promptId/replies/:replyId', (req, res) => {
+  let tagArray = req.body.tags.split("#");
+  tagArray.shift();
+  tagArray[0] = tagArray[0].substring(0, tagArray[0].length - 1);
+  req.body.tags = tagArray;
+
+  Models.Reply.findByIdAndUpdate(req.params.replyId, req.body, (err, reply) => {
+    Models.Prompt.findById(req.params.promptId, (err, prompt) => {
+      prompt.replies.id(req.params.replyId).set(req.body);
+      prompt.save();
+      Models.User.findById(reply.author.id, (err, user) => {
+        user.replies.id(req.params.replyId).set(req.body);
+        user.save();
+        res.redirect(`/prompts/${req.params.promptId}/replies/${req.params.replyId}`);
+      })
+    })
+  })
+})
 
 // ========
 // DESTROY
