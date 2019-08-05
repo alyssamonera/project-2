@@ -56,6 +56,8 @@ user.put('/:id', (req, res) => {
       } else {
         if (req.body.password != user.password){
           req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+          user.password = req.body.password;
+          user.save();
         }
         res.redirect(`/users/${req.params.id}`)
   }})
