@@ -32,6 +32,9 @@ prompt.post('/', (req, res) => {
   // Creates tag array
   let tagArray = req.body.tags.split("#");
   tagArray.shift();
+  if (tagArray.length > 1){
+    tagArray[0] = tagArray[0].substring(0, tagArray[0].length - 1);
+  }
   req.body.tags = tagArray;
 
   // Sets the author
@@ -54,7 +57,9 @@ prompt.post('/:id/reply', (req, res) => {
   // Creates tag array
   let tagArray = req.body.tags.split("#");
   tagArray.shift();
-  tagArray[0] = tagArray[0].substring(0, tagArray[0].length - 1);
+  if (tagArray.length > 1){
+    tagArray[0] = tagArray[0].substring(0, tagArray[0].length - 1);
+  }
   req.body.tags = tagArray;
 
   // Sets the author
@@ -166,7 +171,9 @@ prompt.get('/:promptId/replies/:replyId/edit', (req, res) => {
 prompt.put('/:id', (req, res) => {
   let tagArray = req.body.tags.split("#");
   tagArray.shift();
-  tagArray[0] = tagArray[0].substring(0, tagArray[0].length - 1);
+  if (tagArray.length > 1){
+    tagArray[0] = tagArray[0].substring(0, tagArray[0].length - 1);
+  }
   req.body.tags = tagArray;
 
   Models.Prompt.findByIdAndUpdate(req.params.id, req.body, (err, prompt) => {
@@ -188,7 +195,9 @@ prompt.put('/:id', (req, res) => {
 prompt.put('/:promptId/replies/:replyId', (req, res) => {
   let tagArray = req.body.tags.split("#");
   tagArray.shift();
-  tagArray[0] = tagArray[0].substring(0, tagArray[0].length - 1);
+  if (tagArray.length > 1){
+    tagArray[0] = tagArray[0].substring(0, tagArray[0].length - 1);
+  }
   req.body.tags = tagArray;
 
   Models.Reply.findByIdAndUpdate(req.params.replyId, req.body, (err, reply) => {
