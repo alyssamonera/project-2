@@ -9,6 +9,25 @@ const express = require('express');
 const prompt = express.Router();
 const Models = require ('../models/models.js');
 
+// ======================
+// HANDY-DANDY FUNCTIONS
+// ======================
+
+const tagSort = {
+  // ====================
+  // arrangeTags(array)
+  // Prepares user input tags to be made into an array, accounting for the spaces in between tags
+  // ====================
+  arrangeTags: (array) => {
+    array.shift();
+    if (array.length > 1){
+      for (let i = 0; i < array.length - 1; i++){
+        array[i] = array[i].substring(0, array[i].length - 1)}
+      }
+    return array
+  }
+};
+
 // ========
 // CREATE
 // ========
@@ -20,10 +39,7 @@ prompt.get('/new', (req, res) => {
 // NEW REPLY
 prompt.get('/:id/reply/new', (req, res) => {
   Models.Prompt.findById(req.params.id, (err, prompt) => {
-      if(err){console.log(err)}
-      else {
-        res.render('replies/new.ejs', {tabTitle: "New story", currentUser: req.session.currentUser, promptId: req.params.id, prompt: prompt, error: false})
-      }
+    res.render('replies/new.ejs', {tabTitle: "New story", currentUser: req.session.currentUser, promptId: req.params.id, prompt: prompt, error: false})
   })
 });
 
@@ -34,12 +50,7 @@ prompt.post('/', (req, res) => {
     res.render('prompts/new.ejs', {tabTitle: "New prompt", currentUser: req.session.currentUser, error: true});
   } else {
     // Creates tag array
-    let tagArray = req.body.tags.split("#");
-    tagArray.shift();
-    if (tagArray.length > 1){
-      tagArray[0] = tagArray[0].substring(0, tagArray[0].length - 1);
-    }
-    req.body.tags = tagArray;
+    req.body.tags = tagSort.arrangeTags(req.body.tags.split("#"))
 
     // Sets the author
     req.body.author = {};
@@ -66,12 +77,7 @@ prompt.post('/:id/reply', (req, res) => {
     })
   } else {
     // Creates tag array
-    let tagArray = req.body.tags.split("#");
-    tagArray.shift();
-    if (tagArray.length > 1){
-      tagArray[0] = tagArray[0].substring(0, tagArray[0].length - 1);
-    }
-    req.body.tags = tagArray;
+    req.body.tags = tagSort.arrangeTags(req.body.tags.split("#"))
 
     // Sets the author
     req.body.author = {};
@@ -144,18 +150,6 @@ prompt.get('/:promptId/replies/:replyId', (req, res) => {
 
 // SHOW TAGGED PROMPTS
 prompt.get('/tagged/:tag', (req, res) => {
-  if (req.params.tag.includes("%20")){
-    let tagArray = req.params.tag.split("%20");
-    let tag = "";
-    for (let word of tagArray){
-      if (tagArray.indexOf(word) === tagArray.length-1){
-        tag += word
-      } else {
-        tag += `${word} `
-      }
-    }
-    req.params.tag = tag;
-  }
   Models.Prompt.find({tags: req.params.tag}, (err, prompts) => {
     res.render('tagged/index.ejs', {tabTitle: `Tagged ${req.params.tag}`, currentUser: req.session.currentUser, posts: prompts, type: "prompt", tag: req.params.tag})
   })
@@ -163,18 +157,6 @@ prompt.get('/tagged/:tag', (req, res) => {
 
 // SHOW TAGGED REPLIES
 prompt.get('/replies/tagged/:tag', (req, res) => {
-  if (req.params.tag.includes("%20")){
-    let tagArray = req.params.tag.split("%20");
-    let tag = "";
-    for (let word of tagArray){
-      if (tagArray.indexOf(word) === tagArray.length-1){
-        tag += word
-      } else {
-        tag += `${word} `
-      }
-    }
-    req.params.tag = tag;
-  }
   Models.Reply.find({tags: req.params.tag}, (err, replies) => {
     res.render('tagged/index.ejs', {tabTitle: `Tagged ${req.params.tag}`, currentUser: req.session.currentUser, posts: replies, type: "reply", tag: req.params.tag})
   })
@@ -213,12 +195,7 @@ prompt.get('/:promptId/replies/:replyId/edit', (req, res) => {
 
 // PUT PROMPT
 prompt.put('/:id', (req, res) => {
-  let tagArray = req.body.tags.split("#");
-  tagArray.shift();
-  if (tagArray.length > 1){
-    tagArray[0] = tagArray[0].substring(0, tagArray[0].length - 1);
-  }
-  req.body.tags = tagArray;
+  req.body.tags = tagSort.arrangeTags(req.body.tags.split("#"))
 
   Models.Prompt.findByIdAndUpdate(req.params.id, req.body, (err, prompt) => {
       for (let reply of prompt.replies){
@@ -237,12 +214,8 @@ prompt.put('/:id', (req, res) => {
 
 // PUT REPLY
 prompt.put('/:promptId/replies/:replyId', (req, res) => {
-  let tagArray = req.body.tags.split("#");
-  tagArray.shift();
-  if (tagArray.length > 1){
-    tagArray[0] = tagArray[0].substring(0, tagArray[0].length - 1);
-  }
-  req.body.tags = tagArray;
+  req.body.tags = tagSort.arrangeTags(req.body.tags.split("#"))
+
 
   Models.Reply.findByIdAndUpdate(req.params.replyId, req.body, (err, reply) => {
     Models.Prompt.findById(req.params.promptId, (err, prompt) => {
