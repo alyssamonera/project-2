@@ -71,7 +71,9 @@ user.delete('/:id', (req, res) => {
   Models.User.findByIdAndRemove(req.params.id, (err, user) => {
     if (err){console.log(err)}
     else{
-      res.redirect('/users')
+      req.session.destroy( () => {
+        res.redirect('/')
+      });
     }
   })
 });
