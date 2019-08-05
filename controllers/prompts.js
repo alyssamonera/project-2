@@ -170,19 +170,17 @@ prompt.put('/:id', (req, res) => {
   req.body.tags = tagArray;
 
   Models.Prompt.findByIdAndUpdate(req.params.id, req.body, (err, prompt) => {
-    if (err){console.log(err)}
-    else {
+      for (let reply of prompt.replies){
+        Models.Reply.findById(reply._id, (err, story) => {
+          story.prompt.title = req.body.title;
+          story.save();
+        })
+      }
       Models.User.findById(prompt.author.id, (err, user) => {
-        let updatedPrompt = user.prompts.id(req.params.id);
-        let submittedChanges = req.body;
-        updatedPrompt.title = submittedChanges.title;
-        updatedPrompt.tags = submittedChanges.tags;
-        updatedPrompt.body = submittedChanges.body;
-        updatedPrompt._id = prompt._id;
+        user.prompts.id(req.params.id).set(req.body);
         user.save();
         res.redirect(`/prompts/${req.params.id}`)
       })
-    }
   })
 });
 
@@ -209,7 +207,7 @@ prompt.put('/:promptId/replies/:replyId', (req, res) => {
 // ========
 // DESTROY
 // ========
-// DELETE
+// DELETE PROMPT
 prompt.delete('/:id', (req, res) => {
   Models.Prompt.findByIdAndRemove(req.params.id, (err, prompt) => {
     let userId = prompt.author.id;
@@ -220,5 +218,10 @@ prompt.delete('/:id', (req, res) => {
     })
   })
 });
+
+// DELETE REPLY
+prompt.delete('/:promptId/replies/:replyId', (req, res) => {
+
+})
 
 module.exports = prompt;
