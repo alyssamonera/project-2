@@ -47,6 +47,9 @@
       </div>
 
       <div class="reply-options">
+        <form action="/prompts/<%= reply.prompt.id %>/replies/<%=reply._id %>/like?_method=PUT" method="POST">
+          <input type="submit" value="Like">
+        </form>
         <% if (currentUser) { %>
           <% if (reply.author.username === currentUser.username) { %>
             <a href="/prompts/<%= reply.prompt.id %>/replies/<%= reply._id %>/edit">
