@@ -11,6 +11,13 @@
     </header>
 
     <main class="new-prompt">
+
+      <% if (error){ %>
+        <div class="error-message">
+          <p>You must have a title.</p>
+        </div>
+      <% } %>
+
       <h2>Add a new prompt</h2>
       <form action="/prompts" method="POST">
 

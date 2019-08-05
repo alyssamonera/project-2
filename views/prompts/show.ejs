@@ -10,6 +10,14 @@
     </header>
 
     <main>
+
+      <% if (error){ %>
+        <div class="error-message">
+          <p>ERROR: Either what you're looking for doesn't exist, or you don't have permission to view it.</p>
+        </div>
+      <% } %>
+
+
       <div class="prompt-show">
         <h3><%= prompt.title %></h3>
         <% if (prompt.body) { %>

@@ -10,8 +10,15 @@
     </header>
 
     <main class="prompt-index">
+
+      <% if (error){ %>
+        <div class="error-message">
+          <p>Hmm, we couldn't find that one.</p>
+        </div>
+      <% } %>
+
       <h3>Prompts</h3>
-      
+
       <% for (let data of allPrompts) { %>
         <blockquote class="blockquote">
           <a href="/prompts/<%=data.id%>">

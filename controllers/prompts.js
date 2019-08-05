@@ -14,7 +14,7 @@ const Models = require ('../models/models.js');
 // ========
 // NEW PROMPT
 prompt.get('/new', (req, res) => {
-  res.render('prompts/new.ejs', {tabTitle: "New prompt", currentUser: req.session.currentUser})
+  res.render('prompts/new.ejs', {tabTitle: "New prompt", currentUser: req.session.currentUser, error: false})
 });
 
 // NEW REPLY
@@ -29,32 +29,37 @@ prompt.get('/:id/reply/new', (req, res) => {
 
 // POST PROMPT
 prompt.post('/', (req, res) => {
-  // Creates tag array
-  let tagArray = req.body.tags.split("#");
-  tagArray.shift();
-  if (tagArray.length > 1){
-    tagArray[0] = tagArray[0].substring(0, tagArray[0].length - 1);
+  // If the prompt has no title, send them back with an error message.
+  if (!req.body.title){
+    res.render('prompts/new.ejs', {tabTitle: "New prompt", currentUser: req.session.currentUser, error: true});
+  } else {
+    // Creates tag array
+    let tagArray = req.body.tags.split("#");
+    tagArray.shift();
+    if (tagArray.length > 1){
+      tagArray[0] = tagArray[0].substring(0, tagArray[0].length - 1);
+    }
+    req.body.tags = tagArray;
+
+    // Sets the author
+    req.body.author = {};
+    req.body.author.username = req.session.currentUser.username;
+    req.body.author.id = req.session.currentUser._id;
+
+    let prompt = new Models.Prompt(req.body);
+
+    Models.User.findById(req.body.author.id, (err, user) => {
+      user.prompts.push(prompt);
+      user.save();
+      prompt.save();
+      res.redirect('/prompts');
+    })
   }
-  req.body.tags = tagArray;
-
-  // Sets the author
-  req.body.author = {};
-  req.body.author.username = req.session.currentUser.username;
-  req.body.author.id = req.session.currentUser._id;
-
-  let prompt = new Models.Prompt(req.body);
-
-  Models.User.findById(req.body.author.id, (err, user) => {
-    user.prompts.push(prompt);
-    user.save();
-    prompt.save();
-    res.redirect('/prompts');
-  })
 });
 
 // POST REPLY
 prompt.post('/:id/reply', (req, res) => {
-  // If the reply doesn't have the required data, send them back to the new reply page with an error message
+  // If the reply has no title or body, send them back with an error message
   if (!req.body.body || !req.body.title){
     Models.Prompt.findById(req.params.id, (err, prompt) => {
       res.render('replies/new.ejs', {tabTitle: "New story", currentUser: req.session.currentUser, promptId: req.params.id, prompt: prompt, error: true})
@@ -107,7 +112,7 @@ prompt.post('/:id/reply', (req, res) => {
 // INDEX
 prompt.get('/', (req, res) => {
   Models.Prompt.find({}, (err, allPrompts) => {
-    res.render('prompts/index.ejs', {tabTitle: "Browse prompts", currentUser: req.session.currentUser, allPrompts: allPrompts})
+    res.render('prompts/index.ejs', {tabTitle: "Browse prompts", currentUser: req.session.currentUser, allPrompts: allPrompts, error: false})
   })
 });
 
@@ -115,9 +120,11 @@ prompt.get('/', (req, res) => {
 prompt.get('/:id', (req, res) => {
   Models.Prompt.findById(req.params.id, (err, prompt) => {
     if (!prompt){
-      res.send("<p>Hmm! That prompt must've been deleted. <a href='/'>Return to the homepage</a> </p>")
+      Models.Prompt.find({}, (err, allPrompts) => {
+        res.render('prompts/index.ejs', {tabTitle: "Browse prompts", currentUser: req.session.currentUser, allPrompts: allPrompts, error: true})
+      })
     } else {
-      res.render('prompts/show.ejs', {tabTitle: "Read prompt", currentUser: req.session.currentUser, prompt: prompt})
+      res.render('prompts/show.ejs', {tabTitle: "Read prompt", currentUser: req.session.currentUser, prompt: prompt, error: false})
     }
   })
 });
@@ -126,7 +133,9 @@ prompt.get('/:id', (req, res) => {
 prompt.get('/:promptId/replies/:replyId', (req, res) => {
   Models.Reply.findById(req.params.replyId, (err, reply) => {
     if (!reply){
-      res.send(`<p>Hmm! That story doesn't exist. <a href='/prompts/${req.params.promptId}'>Return</a> </p>`)
+      Models.Prompt.findById(req.params.promptId, (err, prompt) => {
+        res.render('prompts/show.ejs', {tabTitle: "Read prompt", currentUser: req.session.currentUser, prompt: prompt, error: true})
+      })
     } else {
       res.render('replies/show.ejs', {tabTitle: "Read story", currentUser: req.session.currentUser, reply: reply})
     }
@@ -154,9 +163,11 @@ prompt.get('/replies/tagged/:tag', (req, res) => {
 prompt.get('/:id/edit', (req, res) => {
   Models.Prompt.findById(req.params.id, (err, prompt) => {
     if (!prompt){
-      res.send("<p>Hmm! That prompt doesn't exist. <a href='/'>Return</a> </p>")
+      Models.Prompt.find({}, (err, allPrompts) => {
+        res.render('prompts/index.ejs', {tabTitle: "Browse prompts", currentUser: req.session.currentUser, allPrompts: allPrompts, error: true})
+      })
     } else if (!req.session.currentUser || req.session.currentUser.username != prompt.author.username){
-      res.send("<p>Hey! You don't have permission to edit this prompt. <a href='/login'>Log in</a> or <a href='/'>return to the homepage.</a> </p>")
+      res.render('prompts/show.ejs', {tabTitle: "Read prompt", currentUser: req.session.currentUser, prompt: prompt, error: true})
     } else {
       res.render('prompts/edit.ejs', {tabTitle: "Edit prompt", currentUser: req.session.currentUser, prompt: prompt})
     }
@@ -167,7 +178,9 @@ prompt.get('/:id/edit', (req, res) => {
 prompt.get('/:promptId/replies/:replyId/edit', (req, res) => {
   Models.Reply.findById(req.params.replyId, (err, reply) => {
     if (!reply){
-      res.send(`<p>Hmm! That story doesn't exist. <a href='/prompts/${req.params.promptId}'>Return</a> </p>`)
+      Models.Prompt.findById(req.params.promptId, (err, prompt) => {
+        res.render('prompts/show.ejs', {tabTitle: "Read prompt", currentUser: req.session.currentUser, prompt: prompt, error: true})
+      })
     } else {
       res.render('replies/edit.ejs', {tabTitle: "Edit story", currentUser: req.session.currentUser, reply: reply})
     }
