@@ -13,17 +13,6 @@
       <img src="<%= user.avatar%>" alt="avatar" class="img-thumbnail">
 
       <h2><%= user.username %></h2>
-
-      <% if (currentUser) { %>
-        <% if (user.username === currentUser.username) { %>
-          <a href="/users/<%= user._id %>/edit">
-          <button>
-            Change username and/or password
-          </button>
-          </a>
-        <% }%>
-      <% }%>
-
       <br>
       <h5>Prompts written by <%= user.username%></h5>
       <ul>
@@ -40,6 +29,12 @@
           </a> </li>
         <% }%>
       </ul>
+
+      <% if (currentUser) { %>
+        <% if (user.username === currentUser.username) { %>
+
+        <% }%>
+      <% }%>
 
     </main>
 
