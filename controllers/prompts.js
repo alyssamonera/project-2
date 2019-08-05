@@ -103,7 +103,7 @@ prompt.get('/', (req, res) => {
 prompt.get('/:id', (req, res) => {
   Models.Prompt.findById(req.params.id, (err, prompt) => {
     if (!prompt){
-      res.send("<p>Hmm! That prompt doesn't exist. <a href='/'>Return to the homepage</a> </p>")
+      res.send("<p>Hmm! That prompt must've been deleted. <a href='/'>Return to the homepage</a> </p>")
     } else {
       res.render('prompts/show.ejs', {tabTitle: "Read prompt", currentUser: req.session.currentUser, prompt: prompt})
     }
@@ -221,7 +221,17 @@ prompt.delete('/:id', (req, res) => {
 
 // DELETE REPLY
 prompt.delete('/:promptId/replies/:replyId', (req, res) => {
-
+  Models.Reply.findByIdAndRemove(req.params.replyId, (err, reply) => {
+    Models.Prompt.findById(req.params.promptId, (err, prompt) => {
+      prompt.replies.id(reply._id).remove();
+      prompt.save();
+      Models.User.findById(reply.author.id, (err, author) => {
+        author.replies.id(reply._id).remove();
+        author.save();
+        res.redirect(`/prompts/${req.params.promptId}`);
+      })
+    })
+  })
 })
 
 module.exports = prompt;
