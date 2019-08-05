@@ -21,7 +21,6 @@
       <div class="prompt-show">
         <h3><%= prompt.title %></h3>
         <% if (prompt.body) { %>
-          <% prompt.body = prompt.body.replace(/\n/g, "<br />") %>
           <p><%- prompt.body %></p>
         <% }%>
         <a href="/users/<%= prompt.author.id %>">
@@ -70,9 +69,9 @@
                 by <%= reply.author.username %>
             </a>
 
-            <% let cutBody = reply.body.slice(0, 200);%>
+            <% let cutBody = reply.body.slice(0, 500);%>
             <p>
-              <%= cutBody %>...
+              <%- cutBody %>...
               <a class="readmore" href="/prompts/<%=prompt.id%>/replies/<%= reply._id %>">
                 Read more
               </a>

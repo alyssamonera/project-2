@@ -34,7 +34,12 @@
         />
 
         <label for="body">Body</label>
-        <textarea name="body"><%= reply.body %></textarea>
+        <div id="edit-reply">
+          <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script> <script type="text/javascript">
+                bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
+          </script>
+          <textarea name="body"><%= reply.body %></textarea>
+        </div>
 
         <label for="tags">Tags (add #s)</label>
         <input type="text" name="tags"
