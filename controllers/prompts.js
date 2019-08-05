@@ -22,7 +22,7 @@ prompt.get('/:id/reply/new', (req, res) => {
   Models.Prompt.findById(req.params.id, (err, prompt) => {
       if(err){console.log(err)}
       else {
-        res.render('replies/new.ejs', {tabTitle: "New story", currentUser: req.session.currentUser, promptId: req.params.id, prompt: prompt})
+        res.render('replies/new.ejs', {tabTitle: "New story", currentUser: req.session.currentUser, promptId: req.params.id, prompt: prompt, error: false})
       }
   })
 });
@@ -54,43 +54,50 @@ prompt.post('/', (req, res) => {
 
 // POST REPLY
 prompt.post('/:id/reply', (req, res) => {
-  // Creates tag array
-  let tagArray = req.body.tags.split("#");
-  tagArray.shift();
-  if (tagArray.length > 1){
-    tagArray[0] = tagArray[0].substring(0, tagArray[0].length - 1);
-  }
-  req.body.tags = tagArray;
+  // If the reply doesn't have the required data, send them back to the new reply page with an error message
+  if (!req.body.body || !req.body.title){
+    Models.Prompt.findById(req.params.id, (err, prompt) => {
+      res.render('replies/new.ejs', {tabTitle: "New story", currentUser: req.session.currentUser, promptId: req.params.id, prompt: prompt, error: true})
+    })
+  } else {
+    // Creates tag array
+    let tagArray = req.body.tags.split("#");
+    tagArray.shift();
+    if (tagArray.length > 1){
+      tagArray[0] = tagArray[0].substring(0, tagArray[0].length - 1);
+    }
+    req.body.tags = tagArray;
 
-  // Sets the author
-  req.body.author = {};
-  req.body.author.username = req.session.currentUser.username;
-  req.body.author.id = req.session.currentUser._id;
+    // Sets the author
+    req.body.author = {};
+    req.body.author.username = req.session.currentUser.username;
+    req.body.author.id = req.session.currentUser._id;
 
-  // Sets the prompt;
-  req.body.prompt = {};
-  req.body.prompt.id = req.params.id;
-  req.body.prompt.title = req.body.promptTitle;
+    // Sets the prompt;
+    req.body.prompt = {};
+    req.body.prompt.id = req.params.id;
+    req.body.prompt.title = req.body.promptTitle;
 
-  // Sets the date
-  req.body.date = new Date();
+    // Sets the date
+    req.body.date = new Date();
 
-  let reply = new Models.Reply(req.body);
+    let reply = new Models.Reply(req.body);
 
-  Models.Prompt.findById(req.params.id, (err, prompt) => {
-    prompt.replies.push(reply);
-    prompt.save();
-    Models.User.findById(prompt.author.id, (err, user) => {
-      user.prompts.id(req.params.id).replies.push(reply);
-      user.save();
-      Models.User.findById(req.body.author.id, (err, author) => {
-        author.replies.push(reply);
-        author.save();
-        reply.save();
-        res.redirect(`/prompts/${req.params.id}`)
+    Models.Prompt.findById(req.params.id, (err, prompt) => {
+      prompt.replies.push(reply);
+      prompt.save();
+      Models.User.findById(prompt.author.id, (err, user) => {
+        user.prompts.id(req.params.id).replies.push(reply);
+        user.save();
+        Models.User.findById(req.body.author.id, (err, author) => {
+          author.replies.push(reply);
+          author.save();
+          reply.save();
+          res.redirect(`/prompts/${req.params.id}`)
+        })
       })
     })
-  })
+  }
 
 });
 

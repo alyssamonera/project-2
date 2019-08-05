@@ -71,6 +71,19 @@ user.delete('/:id', (req, res) => {
   Models.User.findByIdAndRemove(req.params.id, (err, user) => {
     if (err){console.log(err)}
     else{
+      for (let prompt of user.prompts){
+        Models.Prompt.findByIdAndRemove(prompt.id, (err, post) => {
+          console.log("prompt successfully removed");
+        })}
+      for (let reply of user.replies){
+        Models.Reply.findByIdAndRemove(reply.id, (err, response) => {
+          Models.Prompt.findById(reply.prompt.id, (err, parentPrompt) => {
+            parentPrompt.replies.id(reply.id).remove();
+            parentPrompt.save();
+            console.log("response successfully removed");
+          })
+        })
+      }
       req.session.destroy( () => {
         res.redirect('/')
       });
