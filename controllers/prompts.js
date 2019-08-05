@@ -144,6 +144,18 @@ prompt.get('/:promptId/replies/:replyId', (req, res) => {
 
 // SHOW TAGGED PROMPTS
 prompt.get('/tagged/:tag', (req, res) => {
+  if (req.params.tag.includes("%20")){
+    let tagArray = req.params.tag.split("%20");
+    let tag = "";
+    for (let word of tagArray){
+      if (tagArray.indexOf(word) === tagArray.length-1){
+        tag += word
+      } else {
+        tag += `${word} `
+      }
+    }
+    req.params.tag = tag;
+  }
   Models.Prompt.find({tags: req.params.tag}, (err, prompts) => {
     res.render('tagged/index.ejs', {tabTitle: `Tagged ${req.params.tag}`, currentUser: req.session.currentUser, posts: prompts, type: "prompt", tag: req.params.tag})
   })
@@ -151,6 +163,18 @@ prompt.get('/tagged/:tag', (req, res) => {
 
 // SHOW TAGGED REPLIES
 prompt.get('/replies/tagged/:tag', (req, res) => {
+  if (req.params.tag.includes("%20")){
+    let tagArray = req.params.tag.split("%20");
+    let tag = "";
+    for (let word of tagArray){
+      if (tagArray.indexOf(word) === tagArray.length-1){
+        tag += word
+      } else {
+        tag += `${word} `
+      }
+    }
+    req.params.tag = tag;
+  }
   Models.Reply.find({tags: req.params.tag}, (err, replies) => {
     res.render('tagged/index.ejs', {tabTitle: `Tagged ${req.params.tag}`, currentUser: req.session.currentUser, posts: replies, type: "reply", tag: req.params.tag})
   })
