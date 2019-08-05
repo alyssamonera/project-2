@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const ahlisa = {
   username: "ahlisa",
-  password: bcrypt.hashSync("boo", bcrypt.genSaltSync(10)),
+  password: bcrypt.hashSync(process.env.PW1, bcrypt.genSaltSync(10)),
   avatar: "https://idigitalcitizen.files.wordpress.com/2009/08/snoopy-woodstock-sq.jpg",
   prompts: []
 };
@@ -19,7 +19,7 @@ const hate = {
 
 const agarocks = {
   username: "agarocks",
-  password: bcrypt.hashSync("green", bcrypt.genSaltSync(10)),
+  password: bcrypt.hashSync(process.env.PW2, bcrypt.genSaltSync(10)),
   replies: []
 };
 
