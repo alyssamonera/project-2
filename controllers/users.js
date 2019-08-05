@@ -9,6 +9,7 @@ const express = require('express');
 const user = express.Router();
 const Models = require('../models/models.js');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 // ========
 //  READ
@@ -42,19 +43,22 @@ user.get('/:id/edit', (req, res) => {
     } else if (!req.session.currentUser || req.session.currentUser.username != user.username){
       res.send("<p>Hey! You don't have permission to edit this profile. <a href='/login'>Log in</a> or <a href='/'>return to the homepage.</a> </p>")
     } else {
-      res.render('users/edit.ejs', {tabTitle: "Edit profile", currentUser: req.session.currentUser, user: user})
+      res.render('users/edit.ejs', {tabTitle: "Edit profile", currentUser: req.session.currentUser, user: user, error: false})
     }
   })
 })
 
 // PUT
 user.put('/:id', (req, res) => {
-  Models.User.findByIdAndUpdate(req.params.id, req.body, (err, user) => {
-    if (err){console.log(err)}
-    else {
-      res.redirect(`/users/${req.params.id}`)
-    }
-  })
+  Models.User.findByIdAndUpdate(req.params.id, {username: req.body.username}, (err, user) => {
+      if (err && err.code === 11000){
+        res.render('users/edit.ejs', {tabTitle: "Edit profile", currentUser: req.session.currentUser, user: req.session.currentUser, error: true});
+      } else {
+        if (req.body.password != user.password){
+          req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+        }
+        res.redirect(`/users/${req.params.id}`)
+  }})
 });
 
 // ========

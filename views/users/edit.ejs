@@ -7,34 +7,23 @@
     <header>
       <% include ../partials/header.ejs%>
       <link rel="stylesheet" href="/css/users.css">
+      <link rel="stylesheet" href="/css/credentials.css">
     </header>
 
     <main class="user-show">
-      <img src="<%= user.avatar%>" alt="avatar" class="img-thumbnail">
 
-      <h2><%= user.username %></h2>
-      <br>
-      <h5>Prompts written by <%= user.username%></h5>
-      <ul>
-        <% for (let prompt of user.prompts) { %>
-          <li><a href="/prompts/<%= prompt._id %>"><%= prompt.title %></a></li>
-        <% }%>
-      </ul>
+      <% if (error){ %>
+        <div class="error-message">
+          <p>Sorry, that username is already taken.</p>
+        </div>
+      <% } %>
 
-      <h5>Stories written by <%= user.username %></h5>
-      <ul>
-        <% for (let story of user.replies) { %>
-          <li> <a href="/prompts/<%= story.prompt.id %>/replies/<%= story._id%>">
-            <%= story.title %>
-          </a> </li>
-        <% }%>
-      </ul>
+      <form action="/users/<%= user._id %>?_method=PUT" method="POST">
+        <input type="text" name="username" value="<%= user.username %>">
+        <input onClick="this.select();" type="password" name="password" value="<%= user.password %>">
 
-      <% if (currentUser) { %>
-        <% if (user.username === currentUser.username) { %>
-
-        <% }%>
-      <% }%>
+        <input type="submit" value="Submit changes">
+      </form>
 
     </main>
 

@@ -20,10 +20,9 @@ signup.post('/', (req, res) => {
 
     Models.User.create(req.body, (err, user) => {
       if (err && err.code === 11000){
-        console.log(err);
         res.render('signup/new.ejs', {tabTitle: "Sign Up", currentUser: req.session.currentUser, error: true})
       } else if (err && err.code != 11000){
-        res.send('Something went wrong on our end. Contact an administrator or <a href="/">return here.</a>')
+        res.send('Something went wrong. Contact an administrator or <a href="/">return here.</a>')
       } else {
         req.session.currentUser = user;
         res.redirect('/')}
