@@ -56,6 +56,13 @@
     <% } else { %>
       <script type="text/javascript">
         $('#promptDetails').summernote({
+          toolbar: [
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['fontsize', ['fontsize']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link', 'picture', 'video']]
+          ],
           placeholder: "Explain your prompt. (Optional)",
           height: 100,
           disableResizeEditor: true
