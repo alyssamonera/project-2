@@ -73,14 +73,14 @@ app.get('/', (req, res) => {
 
 // SEED
 app.get('/seed', (req, res) => {
-  const user = new Models.User(seed.user);
-  const author = new Models.User(seed.author);
-  const prompt = new Models.Prompt(seed.prompt);
-  prompt.author.id = user._id;
-  user.prompts.push(prompt);
-  user.save();
-  prompt.save();
-  author.save();
+  for (let i = 0; i < seed.users.length; i++){
+    let user = new Models.User(seed.users[i]);
+    let prompt = new Models.Prompt(seed.prompts[i]);
+    prompt.author.id = user._id;
+    user.prompts.push(prompt);
+    prompt.save();
+    user.save();
+  }
   res.redirect('/')
 })
 
