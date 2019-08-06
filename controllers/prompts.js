@@ -229,20 +229,6 @@ prompt.put('/:promptId/replies/:replyId', (req, res) => {
   })
 });
 
-// LIKE PROMPT
-prompt.put('/:id/like', (req, res) => {
-  Models.Prompt.findByIdAndUpdate(req.params.id, {$inc: {likes: 1}}, (err, prompt) => {
-    res.redirect(`/prompts/${req.params.id}`);
-  })
-});
-
-// LIKE REPLY
-prompt.put('/:promptId/replies/:replyId/like', (req, res) => {
-  Models.Reply.findByIdAndUpdate(req.params.replyId, {$inc: {likes: 1}}, (err, reply) => {
-    res.redirect(`/prompts/${req.params.promptId}/replies/${req.params.replyId}`)
-  })
-});
-
 // ========
 // DESTROY
 // ========

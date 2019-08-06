@@ -43,9 +43,6 @@
         </div>
 
         <div class="prompt-options">
-          <form action="/prompts/<%= prompt.id %>/like?_method=PUT" method="POST">
-            <input type="submit" value="Like">
-          </form>
           <% if (currentUser) { %>
             <% if (prompt.author.username === currentUser.username) { %>
               <a href="/prompts/<%= prompt.id %>/edit"><button class="btn btn-light">Edit</button></a>
