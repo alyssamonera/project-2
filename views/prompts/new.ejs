@@ -2,6 +2,9 @@
 <html lang="en" dir="ltr">
   <head>
     <% include ../partials/head.ejs %>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.js"></script>
     <link rel="stylesheet" href="/css/prompts.css">
   </head>
   <body>
@@ -22,15 +25,10 @@
       <form action="/prompts" method="POST">
 
         <label for="title">Prompt</label>
-        <input type=text name="title" placeholder="What if...?">
+        <input type=text name="title" placeholder="Type your prompt here.">
 
         <label for="body">Details</label>
-        <div id="add-prompt">
-          <script type="text/javascript" src="https://js.nicedit.com/nicEdit-latest.js"></script> <script type="text/javascript">
-                bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
-          </script>
-          <textarea name="body" placeholder="Explain your prompt. (Optional)"></textarea>
-        </div>
+        <textarea id="promptDetails" name="body"></textarea>
 
         <label for="tags">Tags (add #s)</label>
         <input type="text" name="tags" placeholder="#character study #dialogue">
@@ -41,6 +39,11 @@
       </form>
     </main>
 
+
+    <footer>
+      <% include ../partials/footer.ejs%>
+    </footer>
+
     <% if (!currentUser) { %>
       <div class="my-modal">
         <div class="my-modal-textbox">
@@ -50,12 +53,15 @@
           <a href="/signup"><button class="btn">Sign Up</button></a>
         </div>
       </div>
+    <% } else { %>
+      <script type="text/javascript">
+        $('#promptDetails').summernote({
+          placeholder: "Explain your prompt. (Optional)",
+          height: 100,
+          disableResizeEditor: true
+        })
+      </script>
     <% }%>
-
-
-    <footer>
-      <% include ../partials/footer.ejs%>
-    </footer>
 
   </body>
 </html>

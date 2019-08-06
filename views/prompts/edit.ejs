@@ -2,6 +2,9 @@
 <html lang="en" dir="ltr">
   <head>
     <% include ../partials/head.ejs %>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.js"></script>
     <link rel="stylesheet" href="/css/prompts.css">
   </head>
   <body>
@@ -18,12 +21,7 @@
         <input type=text name="title" value="<%= prompt.title %>">
 
         <label for="body">Details</label>
-        <div id="edit-prompt">
-          <script type="text/javascript" src="https://js.nicedit.com/nicEdit-latest.js"></script> <script type="text/javascript">
-                bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
-          </script>
-          <textarea name="body"><% if (prompt.body){ %><%- prompt.body %><% }%></textarea>
-        </div>
+        <textarea name="body" id="promptDetails"><% if (prompt.body){ %><%- prompt.body %><% }%></textarea>
 
         <label for="tags">Tags (add #s)</label>
         <input type="text" name="tags" value="<% for (let tag of prompt.tags) { %>#<%= tag %> <%}%>">
@@ -43,6 +41,21 @@
           <a href="/signup"><button class="btn">Sign Up</button></a>
         </div>
       </div>
+    <% } else if (currentUser.username != prompt.author.username){ %>
+      <div class="my-modal">
+        <div class="my-modal-textbox">
+          <h3>Hold up!</h3>
+          <p>You don't have permission to edit this page.</p>
+          <a href="/prompts/<%= prompt.id %>"><button class="btn">Return</button></a>
+        </div>
+      </div>
+    <% } else { %>
+      <script type="text/javascript">
+        $('#promptDetails').summernote({
+          height: 100,
+          disableResizeEditor: true
+        })
+      </script>
     <% }%>
 
 

@@ -87,6 +87,7 @@ input[type=text], textarea{
 input[type=text]{
   display: inline;
   text-align: left;
+  width: 400px;
 }
 
 input[type=submit]{
@@ -101,6 +102,7 @@ textarea{
   height: 20vh;
   width: 90%;
   margin-bottom: 1em;
+  resize: none;
 }
 
 /* MODAL */
