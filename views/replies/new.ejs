@@ -27,19 +27,23 @@
       </a>
       <br><br>
 
-      <h2>Write a response</h2>
-      <h4>Original prompt:</h4>
-      <blockquote cite="/prompts/<%=promptId%>">
-        <%= prompt.title %>
-      </blockquote>
+      <div class="original-prompt">
+        <h4>Original prompt:</h4>
+        <blockquote cite="/prompts/<%=promptId%>">
+          <%= prompt.title %>
+          <%- prompt.body %>
+        </blockquote>
+      </div>
 
+      <h2>Write a response</h2>
+      
       <form action="/prompts/<%=promptId%>/reply" method="POST">
 
         <label for="title">Title</label>
         <input type=text name="title" placeholder="Title">
 
         <label for="body">Body</label>
-        <textarea name="body" id="story" placeholder="Your response goes here."></textarea>
+        <textarea name="body" id="story"></textarea>
 
         <label for="tags">Tags (add #s)</label>
         <input type="text" name="tags" placeholder="#original #horror">
@@ -86,7 +90,6 @@
             ['fontsize', ['fontsize']],
             ['font', ['strikethrough', 'superscript', 'subscript']],
             ['para', ['ul', 'ol', 'paragraph']],
-            ['insert', ['link', 'picture', 'video']]
           ],
           placeholder: "Write your response here.",
           height: 200,

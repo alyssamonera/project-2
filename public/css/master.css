@@ -27,6 +27,10 @@ a:hover{
   border: 1px solid red;
 }
 
+iframe, img{
+  width: 90%;
+}
+
 /* MAIN */
 
 main{

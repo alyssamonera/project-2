@@ -69,6 +69,19 @@
   color: #888;
 }
 
+.original-prompt{
+  text-align: center;
+}
+
+blockquote .note-video-clip{
+  width: 320px;
+  height: 180px
+}
+
+blockquote img{
+  width: 293px !important;
+}
+
 /* FORMS */
 
 .new-prompt{
