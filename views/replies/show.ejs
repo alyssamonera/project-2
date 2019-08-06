@@ -21,6 +21,9 @@
       <h4>Original prompt:</h4>
       <blockquote cite="/prompts/<%=reply.prompt.id%>" class="quote">
         <%= reply.prompt.title %>
+        <% if (reply.prompt.body) { %>
+          <%- reply.prompt.body %>
+        <% }%>
       </blockquote>
 
       <div class="reply">

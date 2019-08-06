@@ -39,7 +39,8 @@ const replySchema = mongoose.Schema({
   },
   prompt: {
     id: {type: String, required: true},
-    title: {type: String, required: true}
+    title: {type: String, required: true},
+    body: String
   },
   tags: Array,
   date: Date,

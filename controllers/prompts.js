@@ -88,6 +88,7 @@ prompt.post('/:id/reply', (req, res) => {
     req.body.prompt = {};
     req.body.prompt.id = req.params.id;
     req.body.prompt.title = req.body.promptTitle;
+    req.body.prompt.body = req.body.promptBody;
 
     // Sets the date
     req.body.date = new Date();
@@ -201,6 +202,7 @@ prompt.put('/:id', (req, res) => {
       for (let reply of prompt.replies){
         Models.Reply.findById(reply._id, (err, story) => {
           story.prompt.title = req.body.title;
+          story.prompt.body = req.body.body;
           story.save();
         })
       }

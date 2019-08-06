@@ -36,7 +36,7 @@
       </div>
 
       <h2>Write a response</h2>
-      
+
       <form action="/prompts/<%=promptId%>/reply" method="POST">
 
         <label for="title">Title</label>
@@ -49,6 +49,7 @@
         <input type="text" name="tags" placeholder="#original #horror">
 
         <input type="hidden" name="promptTitle" value="<%= prompt.title %>">
+        <input type="hidden" name="promptBody" value="<%= prompt.body%>">
 
         <input type="submit" value="Submit" class="btn btn-dark">
 
