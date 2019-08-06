@@ -50,7 +50,7 @@ user.get('/:id/edit', (req, res) => {
 
 // PUT
 user.put('/:id', (req, res) => {
-  Models.User.findByIdAndUpdate(req.params.id, {username: req.body.username}, (err, user) => {
+  Models.User.findByIdAndUpdate(req.params.id, {username: req.body.username, avatar: req.body.avatar}, (err, user) => {
       if (err && err.code === 11000){
         res.render('users/edit.ejs', {tabTitle: "Edit profile", currentUser: req.session.currentUser, user: req.session.currentUser, error: true});
       } else {

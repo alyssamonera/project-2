@@ -100,6 +100,6 @@ To access this app, visit the site at https://calliope-app.herokuapp.com/
 
 1. **If you delete a response and try to write a new one to the same prompt, the site won't let you.** This is supposed to prevent people from spamming replies to a prompt, but if you delete your response and try to write a new one, the site will stop you from doing so. **You should be able to do it if you log out and log back in,** but I can't quite figure out why.
 
-2. **
+2. **Every time you update one collection, you have to update ALL of them.** This is of course not optimal. I'm strongly considering redoing 90% of this project with another database, but I'm not sure how doable that is.
 
 3. **If you encounter any other issues, feel free to contact me.** I am new to the software engineering scene and always open to pointers.
