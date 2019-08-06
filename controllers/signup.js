@@ -17,6 +17,9 @@ signup.get('/', (req, res) => {
 // POST
 signup.post('/', (req, res) => {
     req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+    if (req.body.avatar === ""){
+      req.body.avatar = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/500px-User_font_awesome.svg.png"
+    }
 
     Models.User.create(req.body, (err, user) => {
       if (err && err.code === 11000){
