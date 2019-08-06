@@ -83,33 +83,23 @@ Models.Prompt.findById(req.params.id, (err, prompt) => {
 
 2. Enter your desired username and password. You may provide an avatar URL. By default, the image will be an anonymous icon.
 
-3. The signup page will automatically log you in 
+3. The signup page will automatically log you in and take you back to the main page.
 
-4. Once you've completed your swipes, you will be taken to a results page that displays your most recent matches from the most recent round of swipes. These are also presented on a carousel, but now they come with a title, author, and cover in addition to the summary.
+4. From there, you can hit "browse" to look at an index of prompts, or hit "create" to write your own prompt.
 
-5. At any time after you've matched with a book, regardless of whether you've hit the results screen, you may navigate to your match history and view all the matches you've had so far. The link to this page is located up top, titled "Your Match History." <br> On this page, you may sort through your matches by date added, title, and author. You may also remove any match from your history.
+5. On the prompt page, you can either reply to the prompt or edit/delete it based on whether you're the author. If you aren't logged in, you won't see any of these options.
+
+6. All prompts are capable of embedding videos or inserting images, but replies are restricted to text only.
 
 ### Installation
 
-To install this app on your local computer:
-
-1. Clone the repository.
-
-<img src="https://i.imgur.com/zyyI0vd.png">
-
-2. Open index.html in your browser.
-
-<img src="https://i.imgur.com/bXqjE8p.png">
-
-3. Enter an API key. [If you don't already have one, here's how to obtain it.](https://developers.google.com/books/docs/v1/getting_started)
-
-4. You may also test out the app over at [the live site here](https://alyssamonera.github.io/blind_book_date).
+To access this app, visit the site at https://calliope-app.herokuapp.com/
 
 
 ## Known Issues
 
-1. **This app requires a Google Books API key to run in its current state.** This app was developed for a General Assembly front-end development project and currently has no back-end to securely store an API key. This is a known issue and will be fixed in a forthcoming update. See Installation for details on obtaining a key.
+1. **If you delete a response and try to write a new one to the same prompt, the site won't let you.** This is supposed to prevent people from spamming replies to a prompt, but if you delete your response and try to write a new one, the site will stop you from doing so. **You should be able to do it if you log out and log back in,** but I can't quite figure out why.
 
-2. **Data will occasionally fail to load from the API and fail to display summaries on the app page.** If this happens, an error message will usually display instructing the user to refresh the page. If the app page opens with only a read-more inside, please refresh the page and try again. If this doesn't fix the issue, please contact me.
+2. 
 
 3. **If you encounter any other issues, feel free to contact me.** I am new to the software engineering scene and always open to pointers.

@@ -59,6 +59,22 @@ user.put('/:id', (req, res) => {
           user.password = req.body.password;
           user.save();
         }
+        req.session.currentUser = req.body;
+        req.session.currentUser._id = user._id;
+        for (let reply of user.replies){
+          Models.Reply.findByIdAndUpdate(reply.id, {author: {username: req.body.username, id: user._id}}, (err, story) => {
+            Models.Prompt.findById(story.prompt.id, (err, prompt) => {
+              prompt.replies.id(reply.id).author.username = req.body.username;
+              prompt.replies.id(reply.id).author.id = user._id
+              prompt.save();
+            })
+          })
+        }
+        for (let prompt of user.prompts){
+          Models.Prompt.findByIdAndUpdate(prompt.id, {author: {username: req.body.username, id: user._id}}, (err, post) => {
+            console.log("prompt updated");
+          })
+        }
         res.redirect(`/users/${req.params.id}`)
   }})
 });
