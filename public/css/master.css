@@ -61,6 +61,37 @@ main{
   text-align: center;
 }
 
+/* ABOUT */
+
+.about-page{
+  text-align: center;
+}
+
+.about-page a{
+  color: var(--scarlet);
+}
+
+.about-page a:hover{
+  color: red;
+}
+
+.about-page h2{
+  font-family: var(--Merri);
+}
+
+.about-page h3{
+  margin-top: 1em;
+}
+
+.about-page img{
+  display: block;
+  margin: 0 auto;
+}
+
+.about-page ul{
+  text-align: left;
+}
+
 /* FORM */
 
 form{

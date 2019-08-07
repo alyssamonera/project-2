@@ -71,6 +71,11 @@ app.get('/', (req, res) => {
   res.render('index.ejs', {tabTitle: "Home", currentUser: req.session.currentUser})
 });
 
+// ABOUT
+app.get('/about', (req, res) => {
+  res.render('about.ejs', {tabTitle: "About", currentUser: req.session.currentUser})
+});
+
 // SEED
 app.get('/seed', (req, res) => {
   for (let i = 0; i < seed.users.length; i++){
@@ -82,7 +87,7 @@ app.get('/seed', (req, res) => {
     user.save();
   }
   res.redirect('/')
-})
+});
 
 // SIGNUP CONTROLLER
 const signupController = require('./controllers/signup.js');

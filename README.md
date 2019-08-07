@@ -16,7 +16,7 @@ Some of these technologies will most likely be replaced as I continue to learn m
 
 ### Technologies Used
 
-This app currently utilizes basic front-end technologies (e.g. HTML5, CSS3, and JavaScript) and the non-relational database **MongoDB**, which is hosted on **Atlas**. It may switch over to a more relationship-friendly database such as SQL in the coming months.
+This app currently utilizes basic front-end technologies (e.g. HTML5, CSS3, JavaScript, and a little jQuery) and the non-relational database **MongoDB**, which is hosted on **Atlas**. It may switch over to a more relationship-friendly database such as SQL in the coming months.
 
 * The app relies largely on Node.js packages such as Express, Mongoose, Express-Session, EJS, dotenv, and bcrypt.
 
@@ -25,6 +25,8 @@ This app currently utilizes basic front-end technologies (e.g. HTML5, CSS3, and 
 * As mentioned above, Calliope uses the [Summernote rich text editor](https://summernote.org/) for all prompts and stories.
 
 * It also uses [Bootstrap](https://getbootstrap.com/) as a CSS framework.
+
+* The front page utilizes [the FavQs API](https://favqs.com/api) to get and display random inspirational quotes.
 
 ### Approaches Taken
 
