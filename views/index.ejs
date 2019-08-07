@@ -2,6 +2,8 @@
 <html lang="en" dir="ltr">
   <head>
     <% include partials/head.ejs %>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="/js/main.js"></script>
   </head>
   <body>
     <header>
@@ -9,14 +11,21 @@
     </header>
 
     <main class="home-page">
+      <h2>
       <% if (currentUser) { %>
-        <h2>Welcome, <%= currentUser.username %>!</h2>
+        Welcome, <%= currentUser.username %>!
+      <% } else {%>
+        Welcome!
       <% }%>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </h2>
+      <div class="quote-container">
+        <p><span id="api-quote" class="text-muted"></span></p>
+      </div>
     </main>
 
     <footer>
       <% include partials/footer.ejs %>
     </footer>
+
   </body>
 </html>

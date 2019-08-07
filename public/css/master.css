@@ -38,6 +38,19 @@ main{
   margin: 0 1em;
 }
 
+.home-page h2{
+  font-family: var(--Merri);
+}
+
+.quote-container{
+  padding: 1em;
+  border: 3px double #ccc;
+}
+
+#api-quote{
+  font-family: var(--Merri)
+}
+
 /* HOME PAGE */
 
 .home-page{

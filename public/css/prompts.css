@@ -7,6 +7,7 @@
 .mb-0{
   font-size: 1.5em;
   text-align: left;
+  font-family: var(--Merri);
 }
 
 .byline{
@@ -23,6 +24,10 @@
 
 .prompt-show{
   border-bottom: 0.1px solid #ccc;
+}
+
+.prompt-show h3{
+  font-family: var(--Merri);
 }
 
 .prompt-details{
