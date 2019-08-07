@@ -45,6 +45,8 @@ main{
 .quote-container{
   padding: 1em;
   border: 3px double #ccc;
+  margin: 0 auto;
+  width: 60%;
 }
 
 #api-quote{
