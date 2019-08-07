@@ -19,7 +19,17 @@
 
 
       <div class="prompt-show">
-        <h3><%= prompt.title %></h3>
+        <h3>
+        <% if (prompt.body) { %>
+          <% if (prompt.body.includes(`<img`)) {%>
+            <i class="fas fa-images"></i>
+          <%} else if (prompt.body.includes(`<iframe`)) {%>
+            <i class="fas fa-video"></i>
+          <%}} else {%>
+          <i class="fas fa-quote-right"></i>
+        <% }%>
+        <%= prompt.title %>
+        </h3>
         <% if (prompt.body) { %>
           <p><%- prompt.body %></p>
         <% }%>

@@ -1,14 +1,22 @@
 /* INDEX DISPLAY */
 
+.one-prompt{
+  border-bottom: 1px solid #ccc;
+}
+
 .mb-0{
-  font-size: 2em;
-  text-align: center;
+  font-size: 1.5em;
+  text-align: left;
 }
 
 .byline{
   text-align: right;
   margin-right: 3em;
   font-size: 1.2em;
+}
+
+.index-body{
+
 }
 
 /* SHOW DISPLAY */
@@ -59,6 +67,7 @@
   padding: 1em;
   border: 1px solid #ccc;
   border-radius: 1em;
+  margin-bottom: 1em;
 }
 
 .readmore{

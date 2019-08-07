@@ -20,9 +20,17 @@
       <h3>Prompts</h3>
 
       <% for (let data of allPrompts) { %>
-        <blockquote class="blockquote">
+        <blockquote class="blockquote one-prompt">
           <a href="/prompts/<%=data.id%>">
             <p class="mb-0">
+            <% if (data.body) {%>
+              <% if (data.body.includes(`<img`)) {%>
+                <i class="fas fa-images"></i>
+              <%} else if (data.body.includes(`<iframe`)) {%>
+                <i class="fas fa-video"></i>
+              <%}} else {%>
+              <i class="fas fa-quote-right"></i>
+            <% }%>
             <%= data.title %>
             </p>
           </a>
@@ -31,6 +39,7 @@
             <p class="blockquote-footer text-muted byline">
               <%= data.author.username %>
             </p></a>
+
         </blockquote>
       <% }%>
     </main>
