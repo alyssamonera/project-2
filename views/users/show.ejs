@@ -16,14 +16,16 @@
 
       <% if (currentUser) { %>
         <% if (user.username === currentUser.username) { %>
-          <a href="/users/<%= user._id %>/edit">
-          <button>
-            Update your account
-          </button>
-          </a>
-          <form action="/users/<%= user._id%>?_method=DELETE" method="POST">
-            <input type="submit" value="Delete your account" class="btn btn-danger">
-          </form>
+          <div class="profile-actions">
+            <a href="/users/<%= user._id %>/edit">
+            <button class="btn btn-dark">
+              Update your account
+            </button>
+            </a>
+            <form action="/users/<%= user._id%>?_method=DELETE" method="POST">
+              <input type="submit" value="Delete your account" class="btn btn-danger">
+            </form>
+          </div>
         <% }%>
       <% }%>
 

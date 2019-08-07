@@ -8,3 +8,15 @@ img{
 h2{
   text-align: center;
 }
+
+.profile-actions{
+  text-align: center;
+}
+
+.profile-actions button, .profile-actions form{
+  display: inline;
+}
+
+.profile-actions input{
+  margin: 0;
+}
