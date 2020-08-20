@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/alyssamonera/project-2#readme",
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "dotenv": "^8.0.0",
     "ejs": "^2.6.2",
     "express": "^4.17.1",
